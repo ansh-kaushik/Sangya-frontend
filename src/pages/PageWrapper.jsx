@@ -5,12 +5,12 @@ import Footer from "../components/Footer/Footer";
 
 export default function PageWrapper({ children }) {
   return (
-    <div className="flex">
+    <div className="flex  h-screen overflow-hidden">
       <Sidebar />
-      <div className="flex-1 overflow-y-auto h-screen ">
+      <div className=" relative flex-1 h-full">
         <Header />
         {/* main */}
-        <div className="">{children}</div>
+        {children}
         <Footer />
       </div>
     </div>

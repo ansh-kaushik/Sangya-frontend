@@ -7,8 +7,15 @@ import HistoryIcon from "@mui/icons-material/History";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import SettingsIcon from "@mui/icons-material/Settings";
-export default function Sidebar() {
+import { useDispatch, useSelector } from "react-redux";
+import { UIactions } from "../store";
+export default function Sidebar(props) {
+  // console.log(props.location.pathname);
+
   const [open, setOpen] = useState(true);
+  const selectedMenu = useSelector((state) => state.UI.selectedMenu);
+  // console.log(selectedMenu);
+  const dispatch = useDispatch();
   const Menus = [
     { title: "Home", src: "Chart_fill", link: "", icon: <HomeIcon /> },
     {
@@ -44,6 +51,7 @@ export default function Sidebar() {
       sidebar.addEventListener("mouseleave", handleMouseLeave);
     };
   }, [open]);
+  useEffect(() => {}, [selectedMenu]);
   return (
     <div id="sidebar" className="flex  sticky left-0">
       <div
@@ -77,9 +85,10 @@ export default function Sidebar() {
             <Link key={idx} to={`/${menu.link}`}>
               <li
                 key={idx}
+                onClick={() => dispatch(UIactions.setSelectedMenu({ selectedMenu: menu.title }))}
                 className={`text-gray-200 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${
                   menu.gap ? "mt-9" : "mt-2"
-                }  ${idx === 0 && "bg-light-white"}`}
+                }  ${selectedMenu === menu.title ? "bg-light-white" : "bg-transparent"}`}
               >
                 {/* <img src={`./src/assets/${menu.src}.png`} className="w-6 h-6 object-contain" /> */}
                 {menu.icon}

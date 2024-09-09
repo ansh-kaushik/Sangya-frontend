@@ -16,8 +16,8 @@ const videoDetails = {
 export default function Home() {
   return (
     <PageWrapper>
-      <div className="flex flex-wrap gap-1 justify-start items-center overflow-y-auto ">
-        {Array.from({ length: 10 }, (_, idx) => (
+      <div className="flex flex-wrap gap-1 max-h-full justify-start items-center overflow-y-auto ">
+        {Array.from({ length: 20 }, (_, idx) => (
           <VideoCard
             key={idx}
             channelImage={videoDetails.channelImage}

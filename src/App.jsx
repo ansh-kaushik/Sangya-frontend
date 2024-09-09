@@ -7,6 +7,12 @@ import MMRList from "./components/MMRList";
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import Inbox from "./pages/Inbox";
+import Subscriptions from "./pages/Subscriptions";
+import Home from "./pages/Home";
+import UserVideos from "./pages/UserVideos";
+import WatchHistory from "./pages/WatchHistory";
+import Playlists from "./pages/Playlists";
+import LikedVideos from "./pages/LikedVideos";
 
 const getNewKills = async () => {
   // const api_key = "HDEV-8547f177-1188-4cf9-8086-2a8d734ec747";
@@ -48,8 +54,13 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route path="/" element={<Home />} />
         <Route path="/chats" element={<Inbox />} />
+        <Route path="/subscriptions" element={<Subscriptions />} />
+        <Route path="/myVideos" element={<UserVideos />} />
+        <Route path="/watchHistory" element={<WatchHistory />} />
+        <Route path="/myPlaylists" element={<Playlists />} />
+        <Route path="/likedVideos" element={<LikedVideos />} />
       </Routes>
     </>
   );
