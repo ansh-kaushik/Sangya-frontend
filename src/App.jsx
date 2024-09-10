@@ -13,6 +13,7 @@ import UserVideos from "./pages/UserVideos";
 import WatchHistory from "./pages/WatchHistory";
 import Playlists from "./pages/Playlists";
 import LikedVideos from "./pages/LikedVideos";
+import Login from "./pages/Login";
 
 const getNewKills = async () => {
   // const api_key = "HDEV-8547f177-1188-4cf9-8086-2a8d734ec747";
@@ -61,6 +62,7 @@ function App() {
         <Route path="/watchHistory" element={<WatchHistory />} />
         <Route path="/myPlaylists" element={<Playlists />} />
         <Route path="/likedVideos" element={<LikedVideos />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   );

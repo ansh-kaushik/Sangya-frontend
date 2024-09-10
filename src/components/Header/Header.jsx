@@ -1,8 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { alpha, InputBase, styled, TextField } from "@mui/material";
+import {
+  alpha,
+  Button,
+  IconButton,
+  InputBase,
+  Menu,
+  MenuItem,
+  styled,
+  TextField,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../store";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -43,6 +54,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 export default function Header() {
+  const navigate = useNavigate();
+  const auth = useSelector((state) => state.auth.auth);
+  const [anchorEl, setAnchorEl] = useState(null);
+  // console.log(isLoggedIn);
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const dispatch = useDispatch();
   return (
     <div className=" sticky top-0 flex items-center justify-between space-x-4 p-4 bg-blue-600 text-white shadow-md   ">
       <h1 className="text-xl font-bold">SANGYA</h1>
@@ -54,9 +77,49 @@ export default function Header() {
         <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
       </Search>
       <nav className="space-x-4">
-        <Link to="/about" className="hover:underline">
-          <AccountCircleIcon />
-        </Link>
+        {!auth ? (
+          <Button
+            onClick={() => {
+              navigate("/login");
+            }}
+            color="inherit"
+            variant="outlined"
+          >
+            {" "}
+            Sign In
+          </Button>
+        ) : (
+          <div>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircleIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={() => dispatch(authActions.logout())}>Logout</MenuItem>
+            </Menu>
+          </div>
+        )}
 
         {/* Add more navigation items as needed */}
       </nav>
