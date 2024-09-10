@@ -50,8 +50,8 @@ export default function Sidebar(props) {
       sidebar.addEventListener("mouseenter", handleMouseEnter);
       sidebar.addEventListener("mouseleave", handleMouseLeave);
     };
-  }, [open]);
-  useEffect(() => {}, [selectedMenu]);
+  }, []);
+  useEffect(() => {}, []);
   return (
     <div id="sidebar" className="flex  sticky left-0">
       <div

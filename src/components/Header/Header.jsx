@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../../store";
+import { authActions, UIactions } from "../../store";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -56,12 +56,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header() {
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth.auth);
+  const selectedMenu = useSelector((state) => state.UI.selectedMenu);
   const [anchorEl, setAnchorEl] = useState(null);
   // console.log(isLoggedIn);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
+  const handleProfile = () => {
+    dispatch(UIactions.setSelectedMenu({ selectedMenu: undefined }));
+    navigate("/profile");
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -69,13 +73,15 @@ export default function Header() {
   return (
     <div className=" sticky top-0 flex items-center justify-between space-x-4 p-4 bg-blue-600 text-white shadow-md   ">
       <h1 className="text-xl font-bold">SANGYA</h1>
+      {selectedMenu && (
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
+        </Search>
+      )}
 
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
-      </Search>
       <nav className="space-x-4">
         {!auth ? (
           <Button
@@ -115,7 +121,7 @@ export default function Header() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleProfile}>My account</MenuItem>
               <MenuItem onClick={() => dispatch(authActions.logout())}>Logout</MenuItem>
             </Menu>
           </div>
