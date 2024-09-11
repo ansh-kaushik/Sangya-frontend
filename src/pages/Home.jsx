@@ -16,7 +16,7 @@ const videoDetails = {
 export default function Home() {
   return (
     <PageWrapper>
-      <div className="flex flex-wrap gap-1 max-h-full justify-start items-center overflow-y-auto ">
+      <div className="flex flex-wrap gap-1 h-[calc(85vh-0px)] justify-start items-center overflow-y-auto ">
         {Array.from({ length: 20 }, (_, idx) => (
           <VideoCard
             key={idx}

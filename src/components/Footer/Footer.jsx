@@ -6,7 +6,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import InstagramIcon from "@mui/icons-material/Instagram";
 export default function Footer() {
   return (
-    <div className=" absolute w-full  bottom-0  flex items-center justify-between space-x-4 p-2 bg-slate-600 text-white shadow-md   ">
+    <div className=" fixed w-[95%]  bottom-0  flex items-center justify-between space-x-4 p-2 bg-slate-600 text-white shadow-md   ">
       <h1 className="">@2024 Sangya. All Rights Reserved</h1>
       <nav className="space-x-4">
         <Link to="/" className="hover:underline">

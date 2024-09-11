@@ -1,6 +1,7 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const initialUIState = {
+  sideBarOpen: true,
   selectedMenu: "Home",
 };
 
@@ -13,6 +14,9 @@ const UISlice = createSlice({
   reducers: {
     setSelectedMenu(state, action) {
       state.selectedMenu = action.payload.selectedMenu;
+    },
+    changeSideBarOpen(state, action) {
+      state.sideBarOpen = action.payload;
     },
   },
 });

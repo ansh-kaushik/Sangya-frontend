@@ -25,14 +25,14 @@ export default function SignUp() {
   };
   return (
     <Container maxWidth="xs">
-      <Paper elevation={10} className="mt-8 p-2">
-        <Avatar className="mx-auto text-center mb-1" sx={{ bgcolor: "secondary.main" }}>
+      <Paper elevation={10} sx={{ marginTop: 8, padding: 2 }}>
+        <Avatar className="mx-auto text-center mb-2" sx={{ bgcolor: "secondary.main" }}>
           <LockOutlined />
         </Avatar>
         <Typography component="h1" variant="h5" className="text-center">
           Sign Up
         </Typography>
-        <Box component="form" onSubmit={handleSignUp} className="mt-1">
+        <Box component="form" onSubmit={handleSignUp} className="mt-4">
           <TextField
             label="First Name"
             name="first_name"

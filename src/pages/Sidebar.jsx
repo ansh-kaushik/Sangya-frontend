@@ -12,8 +12,9 @@ import { UIactions } from "../store";
 export default function Sidebar(props) {
   // console.log(props.location.pathname);
 
-  const [open, setOpen] = useState(true);
+  // const [open, setOpen] = useState(true);
   const selectedMenu = useSelector((state) => state.UI.selectedMenu);
+  const open = useSelector((state) => state.UI.sideBarOpen);
   // console.log(selectedMenu);
   const dispatch = useDispatch();
   const Menus = [
@@ -34,11 +35,13 @@ export default function Sidebar(props) {
   useEffect(() => {
     function handleMouseEnter(e) {
       e.stopPropagation();
-      setOpen(true);
+      // setOpen(true);
+      dispatch(UIactions.changeSideBarOpen(true));
     }
     function handleMouseLeave(e) {
       e.stopPropagation();
-      setOpen(false);
+      // setOpen(false);
+      dispatch(UIactions.changeSideBarOpen(false));
     }
     const sidebar = document.getElementById("sidebar");
     if (!sidebar) return;
@@ -92,7 +95,9 @@ export default function Sidebar(props) {
               >
                 {/* <img src={`./src/assets/${menu.src}.png`} className="w-6 h-6 object-contain" /> */}
                 {menu.icon}
-                <span className={`${!open && "scale-0"} origin-left  duration-300`}>
+                <span
+                  className={`${!open && "scale-0"} origin-left text-gray-200  text-sm duration-300`}
+                >
                   {menu.title}
                 </span>
               </li>

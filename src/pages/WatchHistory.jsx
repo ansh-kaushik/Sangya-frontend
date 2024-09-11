@@ -15,14 +15,14 @@ const videoDetails = {
 export default function WatchHistory() {
   return (
     <PageWrapper>
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col ">
         {/* Non-scrollable heading */}
         <h2 className="text-lg font-semibold p-4">
           Watch History <History />
         </h2>
 
         {/* Scrollable content area */}
-        <div className="flex-1 overflow-y-auto p-2 flex flex-wrap gap-1">
+        <div className="flex-1   p-2 flex flex-wrap gap-1">
           {Array.from({ length: 10 }, (_, idx) => (
             <VideoCard
               key={idx}

@@ -17,6 +17,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import AppSettings from "./pages/AppSettings";
 import SignUp from "./pages/SignUp";
+import VideoPage from "./pages/VideoPage";
 
 const getNewKills = async () => {
   // const api_key = "HDEV-8547f177-1188-4cf9-8086-2a8d734ec747";
@@ -69,6 +70,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/appSettings" element={<AppSettings />} />
         <Route path="/signUp" element={<SignUp />} />
+        <Route path="/video" element={<VideoPage />} />
       </Routes>
     </>
   );
