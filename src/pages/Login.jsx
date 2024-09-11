@@ -6,6 +6,7 @@ import {
   Checkbox,
   Container,
   FormControlLabel,
+  Link,
   Paper,
   TextField,
   Typography,
@@ -14,10 +15,11 @@ import {
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { authActions } from "../store";
+import { authActions, UIactions } from "../store";
 
 export default function Login() {
   const auth = useSelector((state) => state.auth.auth);
+  // const selectedMenu = useSelector((state) => state.UI.selectedMenu);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -29,6 +31,7 @@ export default function Login() {
     localStorage.setItem("email", email);
     localStorage.setItem("password", password);
     dispatch(authActions.login());
+    dispatch(UIactions.setSelectedMenu({ selectedMenu: "Home" }));
     navigate("/");
   };
   return (
@@ -65,6 +68,14 @@ export default function Login() {
           <Button type="submit" variant="contained" fullWidth sx={{ mt: 1 }}>
             Sign In
           </Button>
+          <Box component="div" className="flex justify-between mt-4">
+            <Link component="button" variant="body2">
+              Forgot Password?
+            </Link>
+            <Link component="button" variant="body2" onClick={() => navigate("/signUp")}>
+              Register
+            </Link>
+          </Box>
         </Box>
       </Paper>
     </Container>
