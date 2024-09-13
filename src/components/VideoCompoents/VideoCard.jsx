@@ -10,9 +10,9 @@ const VideoCard = ({ thumbnail, title, channel, views, channelImage, uploadTime,
       <img
         src={thumbnail}
         alt={title}
-        className={`rounded-xl hover:cursor-pointer hover:rounded-none hover:shadow-2xl transition-all duration-300 ${sidebar ? "w-40" : ""}`}
+        className={`rounded-xl hover:cursor-pointer hover:rounded-none  transition-all duration-300 aspect-video ${sidebar ? "w-40" : "w-50"}`}
         onClick={() => navigate("/video")}
-        style={{ objectFit: "cover" }}
+        // style={{ objectFit: "cover" }}
       />
       <div className={`flex justify-between ${sidebar ? "px-2 py-3" : "p-4"}`}>
         {!sidebar && (

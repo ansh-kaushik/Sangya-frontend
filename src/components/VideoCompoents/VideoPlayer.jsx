@@ -171,7 +171,10 @@ export default function VideoPlayer() {
           <ReactPlayer
             ref={playerRef}
             className="player h-full"
-            url="https://www.youtube.com/watch?v=9lx11dy9J30&t=2s"
+            // url="https://www.youtube.com/watch?v=9lx11dy9J30&t=2s"
+            // url="https://www.youtube.com/watch?v=Nq2wYlWFucg"
+            // url="http://res.cloudinary.com/dgulc4xsa/video/upload/v1726119429/gbiqrlhnkubluzo0xvkw.mkv"
+            url="http://res.cloudinary.com/dgulc4xsa/video/upload/v1726119694/vec8mu81ylqlhts8igkv.mp4"
             // url="http://res.cloudinary.com/dpzq9hypt/video/upload/v1723383234/djzurg0kfa5eyuuvdn15.mp4"
             width="100%"
             height="100%"

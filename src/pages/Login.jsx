@@ -16,23 +16,32 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authActions, UIactions } from "../store";
+import axios from "axios";
 
 export default function Login() {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const auth = useSelector((state) => state.auth.auth);
   // const selectedMenu = useSelector((state) => state.UI.selectedMenu);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email");
     const password = formData.get("password");
-    // console.log(email, password);
     localStorage.setItem("email", email);
     localStorage.setItem("password", password);
-    dispatch(authActions.login());
-    dispatch(UIactions.setSelectedMenu({ selectedMenu: "Home" }));
-    navigate("/");
+
+    const res = await axios.post(`${BASE_URL}/users/login`, { email, password });
+    const data = res.data;
+    // console.log(data);
+    if (data.statusCode == 200) {
+      dispatch(
+        authActions.login({ email, name: data.data.user.fullName, avatar: data.data.user.avatar })
+      );
+      dispatch(UIactions.setSelectedMenu({ selectedMenu: "Home" }));
+      navigate("/");
+    }
   };
   return (
     <Container maxWidth="xs">

@@ -11,6 +11,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -19,9 +20,26 @@ export default function SignUp() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   //   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const navigate = useNavigate();
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    const fullName = data.get("first_name") + " " + data.get("last_name");
+    const email = data.get("email");
+    const username = data.get("username");
+    const password = data.get("password");
+    const BASE_URL = import.meta.env.VITE_BASE_URL;
+    const res = await axios.post(`${BASE_URL}/users/register`, {
+      fullName,
+      email,
+      username,
+      password,
+    });
+    console.log(res.data);
+
+    if (res.data.statusCode == 201) {
+      navigate("/login");
+    }
+    // console.log(res);
   };
   return (
     <Container maxWidth="xs">
@@ -42,6 +60,7 @@ export default function SignUp() {
             type="text"
             sx={{ mb: 2, mr: 1, width: "40%" }}
           />
+
           <TextField
             label="Last Name"
             name="last_name"
@@ -60,6 +79,16 @@ export default function SignUp() {
             autoFocus
             type="email"
             // className="mb-2"
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            label="Username"
+            name="username"
+            placeholder="Enter Username"
+            required
+            autoFocus
+            type="text"
+            fullWidth
             sx={{ mb: 2 }}
           />
           <TextField

@@ -14,6 +14,9 @@ import { Tab as BaseTab, tabClasses } from "@mui/base/Tab";
 
 export default function Profile() {
   const auth = useSelector((state) => state.auth.auth);
+  let { name, email, avatar } = useSelector((state) => state.auth);
+
+  const [firstName, lastName] = name.split(" ");
   const navigate = useNavigate();
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -21,6 +24,7 @@ export default function Profile() {
   const handleUpdatePassword = (e) => {
     e.preventDefault();
   };
+
   useEffect(() => {
     if (!auth) {
       navigate("/");
@@ -32,9 +36,14 @@ export default function Profile() {
     <PageWrapper>
       <Container className="shadow-lg h-full p-4 rounded-lg flex flex-col w-full gap-5 max-w-3xl mx-auto bg-white mt-4">
         <Box className="flex items-center gap-5 mb-20 ">
-          <AccountCircleIcon sx={{ fontSize: "100px" }} />
+          {avatar ? (
+            <img width="100px" src={avatar} alt="avatar" />
+          ) : (
+            <AccountCircleIcon sx={{ fontSize: "100px" }} />
+          )}
+
           <Typography variant="h4" component="h1" className="font-bold text-xl">
-            Rahul Kumar
+            {name}
           </Typography>
         </Box>
         <Box className="mt-4">
@@ -46,13 +55,9 @@ export default function Profile() {
             </TabsList>
             <TabPanel value={1}>
               <Box type="form" className="flex flex-wrap gap-4 mt-10 ">
-                <TextField className="w-1/4" defaultValue={`Rahul`} label="First Name" />
-                <TextField className="w-1/4" defaultValue={`Kumar`} label="Last Name" />
-                <TextField
-                  className="w-1/3"
-                  defaultValue={`rahulkumar34@gmail.com`}
-                  label="Email"
-                />
+                <TextField className="w-1/4" defaultValue={firstName} label="First Name" />
+                <TextField className="w-1/4" defaultValue={lastName} label="Last Name" />
+                <TextField className="w-1/3" defaultValue={email} label="Email" />
                 <Button type="submit" onClick={handleUpdate} variant="contained" color="secondary">
                   Save Changes
                 </Button>

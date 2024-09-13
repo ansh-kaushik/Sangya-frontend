@@ -7,6 +7,9 @@ const initialUIState = {
 
 const initialAuthState = {
   auth: false,
+  email: undefined,
+  name: "User Name",
+  avatar: undefined,
 };
 const UISlice = createSlice({
   name: "UISlice",
@@ -25,8 +28,11 @@ const authSlice = createSlice({
   name: "authSlice",
   initialState: initialAuthState,
   reducers: {
-    login(state) {
+    login(state, action) {
       state.auth = true;
+      state.email = action.payload.email;
+      state.name = action.payload.name;
+      state.avatar = action.payload.avatar;
     },
     logout(state) {
       state.auth = false;
