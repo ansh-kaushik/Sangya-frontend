@@ -5,15 +5,6 @@ import PageWrapper from "./PageWrapper";
 import VideoCard from "../components/VideoCompoents/VideoCard";
 import axios from "axios";
 
-const videoDetails = {
-  thumbnail: "./src/assets/thumbnail 1.jpg",
-  title: "C++ Tutorial for Beginners 2024",
-  views: 200,
-  channel: "Code In C++",
-  channelImage: "./src/assets/channel_icon.png",
-  uploadTime: "7 days ago",
-};
-
 export default function Home() {
   const [videos, setVideos] = useState([]);
   const URL = "http://localhost:8000/api/v1/videos";
@@ -24,8 +15,10 @@ export default function Home() {
       thumbnail: video.thumbnail,
       title: video.title,
       views: video.views,
-      channel: "Code In C++",
-      channelImage: "./src/assets/channel_icon.png",
+      url: video.videoFile,
+      description: video.description,
+      channel: video.owner?.username || "Sangya",
+      channelImage: video.owner?.avatar || "./src/assets/channel_icon.png",
       uploadTime: "7 days ago",
     }));
     console.log(videos);
@@ -42,11 +35,13 @@ export default function Home() {
         {videos.map((videoDetails, idx) => (
           <VideoCard
             key={idx}
+            description={videoDetails.description}
             channelImage={videoDetails.channelImage}
             thumbnail={videoDetails.thumbnail}
+            url={videoDetails.url}
             title={videoDetails.title}
-            views={videoDetails.views}
             channel={videoDetails.channel}
+            views={videoDetails.views}
             uploadTime={videoDetails.uploadTime}
           />
         ))}

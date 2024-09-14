@@ -11,6 +11,14 @@ const initialAuthState = {
   name: "User Name",
   avatar: undefined,
 };
+const initialVideoSlice = {
+  url: undefined,
+  title: undefined,
+  channelImage: undefined,
+  channel: undefined,
+  views: undefined,
+  description: undefined,
+};
 const UISlice = createSlice({
   name: "UISlice",
   initialState: initialUIState,
@@ -23,7 +31,24 @@ const UISlice = createSlice({
     },
   },
 });
-
+const videoSlice = createSlice({
+  name: "videoSlice",
+  initialState: initialVideoSlice,
+  reducers: {
+    setVideoDetails(state, action) {
+      const { title, url, channelImage, channel, views, description } = action.payload;
+      return {
+        ...state,
+        title,
+        url,
+        channelImage,
+        channel,
+        views,
+        description,
+      };
+    },
+  },
+});
 const authSlice = createSlice({
   name: "authSlice",
   initialState: initialAuthState,
@@ -41,9 +66,11 @@ const authSlice = createSlice({
 });
 
 const store = configureStore({
-  reducer: { UI: UISlice.reducer, auth: authSlice.reducer },
+  reducer: { UI: UISlice.reducer, auth: authSlice.reducer, video: videoSlice.reducer },
 });
 
 export const UIactions = UISlice.actions;
 export const authActions = authSlice.actions;
+export const videoActions = videoSlice.actions;
+
 export default store;

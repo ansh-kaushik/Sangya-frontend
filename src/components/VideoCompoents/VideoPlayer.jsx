@@ -17,7 +17,7 @@ import {
 } from "@mui/icons-material";
 import screenfull from "screenfull";
 
-export default function VideoPlayer() {
+export default function VideoPlayer({ url, title }) {
   const playerRef = useRef(null);
   const playerRef1 = useRef(null);
 
@@ -171,11 +171,7 @@ export default function VideoPlayer() {
           <ReactPlayer
             ref={playerRef}
             className="player h-full"
-            // url="https://www.youtube.com/watch?v=9lx11dy9J30&t=2s"
-            // url="https://www.youtube.com/watch?v=Nq2wYlWFucg"
-            // url="http://res.cloudinary.com/dgulc4xsa/video/upload/v1726119429/gbiqrlhnkubluzo0xvkw.mkv"
-            url="http://res.cloudinary.com/dgulc4xsa/video/upload/v1726119694/vec8mu81ylqlhts8igkv.mp4"
-            // url="http://res.cloudinary.com/dpzq9hypt/video/upload/v1723383234/djzurg0kfa5eyuuvdn15.mp4"
+            url={url}
             width="100%"
             height="100%"
             volume={videoState.inputVolume / 100}
@@ -194,13 +190,15 @@ export default function VideoPlayer() {
       {isOverlayVisible && (
         <div className="overlay-div flex flex-col justify-between w-full h-full absolute inset-0 text-white shadow-lg transition-all duration-700">
           <div className="overlay-header w-full">
-            <Typography
-              component="div"
-              className={`${videoState.fullScreen ? "p-3" : "py-2 px-1"}`}
-              variant={`${videoState.fullScreen ? "h4" : "h5"}`}
-            >
-              Tutorial in C++
-            </Typography>
+            {videoState.fullScreen && (
+              <Typography
+                component="div"
+                className={`${videoState.fullScreen ? "p-3" : "py-2 px-1"}`}
+                variant={`${videoState.fullScreen ? "h4" : "h5"}`}
+              >
+                {title}
+              </Typography>
+            )}
           </div>
           <div
             className="overlay-middle w-full h-full "

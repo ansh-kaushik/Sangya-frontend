@@ -3,15 +3,17 @@ import PageWrapper from "./PageWrapper";
 import VideoCard from "../components/VideoCompoents/VideoCard";
 import axios from "axios";
 import { useSelector } from "react-redux";
-
-const videoDetails = {
-  thumbnail: "./src/assets/thumbnail 1.jpg",
-  title: "C++ Tutorial for Beginners 2024",
-  views: 200,
-  channel: "Code In C++",
-  channelImage: "./src/assets/channel_icon.png",
-  uploadTime: "7 days ago",
-};
+import {
+  Upload,
+  UploadFile,
+  UploadFileRounded,
+  UploadOutlined,
+  UploadTwoTone,
+} from "@mui/icons-material";
+import { Button } from "@mui/material";
+// import FileUploadIcon from "@mui/icons-material/FileUpload";
+// import FileUploadIcon from "@mui/icons-material/FileUpload";
+// import UploadIcon from "@mui/icons-material/Upload";
 
 export default function UserVideos() {
   const { email } = useSelector((state) => state.auth);
@@ -26,12 +28,14 @@ export default function UserVideos() {
     let videos = res.data.data.videos;
     console.log(videos);
 
-    videos = videos.map((v) => ({
-      thumbnail: v.thumbnail,
-      title: v.title,
-      views: v.views,
-      channel: "Code with C++",
-      channelImage: "./src/assets/channel_icon.png",
+    videos = videos.map((video) => ({
+      thumbnail: video.thumbnail,
+      title: video.title,
+      views: video.views,
+      url: video.videoFile,
+      description: video.description,
+      channel: video.owner?.username || "Sangya",
+      channelImage: video.owner?.avatar || "./src/assets/channel_icon.png",
       uploadTime: "7 days ago",
     }));
     setUserVideos(videos);
@@ -44,7 +48,12 @@ export default function UserVideos() {
     <PageWrapper>
       <div className="flex flex-col h-full">
         {/* Non-scrollable heading */}
-        <h2 className="text-lg font-semibold p-4">User Videos</h2>
+        <div className="flex mt-2  gap-4">
+          <h2 className="text-lg font-semibold p-4">User Videos</h2>
+          <Button size="medium" variant="contained" startIcon={<Upload sx={{ color: "white" }} />}>
+            Upload
+          </Button>
+        </div>
 
         {/* Scrollable content area */}
         <div className="flex-1 overflow-y-auto p-2 flex flex-wrap gap-1">
@@ -54,11 +63,13 @@ export default function UserVideos() {
             userVideos.map((videoDetails, idx) => (
               <VideoCard
                 key={idx}
+                description={videoDetails.description}
                 channelImage={videoDetails.channelImage}
                 thumbnail={videoDetails.thumbnail}
+                url={videoDetails.url}
                 title={videoDetails.title}
-                views={videoDetails.views}
                 channel={videoDetails.channel}
+                views={videoDetails.views}
                 uploadTime={videoDetails.uploadTime}
               />
             ))
