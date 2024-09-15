@@ -1,7 +1,6 @@
 import { Box, Container, createTheme, Slider, styled, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
-import Control from "./Control.jsx";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import SkipNextIcon from "@mui/icons-material/SkipNext";

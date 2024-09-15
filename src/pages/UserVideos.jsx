@@ -4,6 +4,7 @@ import VideoCard from "../components/VideoCompoents/VideoCard";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import {
+  CloudUpload,
   Upload,
   UploadFile,
   UploadFileRounded,
@@ -11,12 +12,14 @@ import {
   UploadTwoTone,
 } from "@mui/icons-material";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 // import FileUploadIcon from "@mui/icons-material/FileUpload";
 // import FileUploadIcon from "@mui/icons-material/FileUpload";
 // import UploadIcon from "@mui/icons-material/Upload";
 
 export default function UserVideos() {
   const { email } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const [userVideos, setUserVideos] = useState([]);
   const getUserVideos = async () => {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -48,9 +51,13 @@ export default function UserVideos() {
     <PageWrapper>
       <div className="flex flex-col h-full">
         {/* Non-scrollable heading */}
-        <div className="flex mt-2  gap-4">
-          <h2 className="text-lg font-semibold p-4">User Videos</h2>
-          <Button size="medium" variant="contained" startIcon={<Upload sx={{ color: "white" }} />}>
+        <div className="flex mt-2  gap-4 justify-start items-center">
+          <h2 className=" p-4 text-xl">User Videos</h2>
+          <Button
+            variant="contained"
+            startIcon={<Upload />}
+            onClick={() => navigate("/uploadVideo")}
+          >
             Upload
           </Button>
         </div>

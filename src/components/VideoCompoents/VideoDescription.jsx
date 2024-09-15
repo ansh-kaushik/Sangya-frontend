@@ -19,7 +19,9 @@ const Description = ({ text, showBorder = true }) => {
   }, [text]);
 
   return (
-    <div className={`relative pb-4  ${showBorder ? "border rounded-xl p-4 bg-gray-200" : ""}`}>
+    <div
+      className={` prose relative pb-4  ${showBorder ? "border rounded-xl p-4 bg-gray-200" : ""}`}
+    >
       <Typography
         variant="subtitle2"
         ref={contentRef}
