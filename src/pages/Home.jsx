@@ -31,7 +31,7 @@ export default function Home() {
   }, []);
   return (
     <PageWrapper>
-      <div className="flex flex-wrap gap-1 h-[calc(85vh-0px)] justify-start items-center overflow-y-auto ">
+      <div className="flex flex-wrap gap-1  justify-start items-center overflow-y-auto ">
         {videos.map((videoDetails, idx) => (
           <VideoCard
             key={idx}

@@ -1,4 +1,13 @@
-import { Box, Container, createTheme, Slider, styled, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  createTheme,
+  Menu,
+  MenuItem,
+  Slider,
+  styled,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -16,17 +25,30 @@ import {
 } from "@mui/icons-material";
 import screenfull from "screenfull";
 
+const qualities = ["144p", "360p", "480p", "720p", "1080p"];
 export default function VideoPlayer({ url, title }) {
   const playerRef = useRef(null);
   const playerRef1 = useRef(null);
-
+  const [curQuality, setCurQuality] = useState("360p");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const conatinerRef = useRef(null);
   const [isOverlayVisible, setIsOverlayVisible] = useState(true);
   const timeoutRef = useRef(null); // To store the timeout ID
   const showOverlay = () => {
     setIsOverlayVisible(true);
     resetTimeout(); // Reset timeout when mouse moves
   };
-
+  const handleMenu = (e) => {
+    // setAnchorEl(e.currentTarget);
+    if (videoState.fullScreen) {
+      setAnchorEl(conatinerRef.current); // Use the container ref for full-screen mode
+    } else {
+      setAnchorEl(e.currentTarget); // Use the event target for normal mode
+    }
+  };
+  const handleClose = (e) => {
+    setAnchorEl(null);
+  };
   const toggleFullScreen = () => {
     setVideoState((prev) => ({ ...prev, fullScreen: !prev.fullScreen }));
     if (screenfull.isEnabled) {
@@ -162,6 +184,7 @@ export default function VideoPlayer({ url, title }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOverlayVisible]);
   //   console.log(isOverlayVisible);
+  // console.log(url.curQuality);
 
   return (
     <div ref={playerRef1} className=" flex flex-col w-full h-full relative">
@@ -170,7 +193,7 @@ export default function VideoPlayer({ url, title }) {
           <ReactPlayer
             ref={playerRef}
             className="player h-full"
-            url={url}
+            url={typeof url === "object" ? url[curQuality] : url}
             width="100%"
             height="100%"
             volume={videoState.inputVolume / 100}
@@ -187,7 +210,12 @@ export default function VideoPlayer({ url, title }) {
         </div>
       </div>
       {isOverlayVisible && (
-        <div className="overlay-div flex flex-col justify-between w-full h-full absolute inset-0 text-white shadow-lg transition-all duration-700">
+        <div
+          style={{
+            backgroundImage: "linear-gradient(to top, rgba(50, 50, 50, 1) , rgba(0, 0, 0, 0) 12%)",
+          }}
+          className="overlay-div flex flex-col justify-between w-full h-full absolute inset-0 text-white shadow-lg transition-transform duration-700"
+        >
           <div className="overlay-header w-full">
             {videoState.fullScreen && (
               <Typography
@@ -217,12 +245,10 @@ export default function VideoPlayer({ url, title }) {
                 ml: "0",
                 mr: "20px",
                 height: "4px",
-                "& .MuiSlider-valueLabel": {
-                  backgroundColor: "white",
-                },
               }}
               // aria-label="Volume"
               size="small"
+              color="#ee2400"
               max={videoState.duration}
               aria-valuetext="hello"
               valueLabelDisplay="auto"
@@ -291,8 +317,38 @@ export default function VideoPlayer({ url, title }) {
                     <ClosedCaptionOff onClick={toggleCaptions} className="hover:cursor-pointer" />
                   )}
                 </div>
-                <div>
-                  <Settings />
+                <div ref={conatinerRef}>
+                  <Settings onClick={handleMenu} className="hover:cursor-pointer" />
+                  <Menu
+                    // id="menu-settings"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                    // keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                    container={conatinerRef.current}
+                  >
+                    {qualities.map((q, idx) => {
+                      return (
+                        <MenuItem
+                          key={idx}
+                          onClick={() => {
+                            setCurQuality(q);
+                            setAnchorEl(null);
+                          }}
+                        >
+                          {q}
+                        </MenuItem>
+                      );
+                    })}
+                  </Menu>
                 </div>
                 <div>
                   {!videoState.fullScreen ? (
