@@ -32,7 +32,11 @@ export default function Login() {
     localStorage.setItem("email", email);
     localStorage.setItem("password", password);
 
-    const res = await axios.post(`${BASE_URL}/users/login`, { email, password });
+    const res = await axios.post(
+      `${BASE_URL}/users/login`,
+      { email, password },
+      { withCredentials: true }
+    );
     const data = res.data;
     // console.log(data);
     if (data.statusCode == 200) {

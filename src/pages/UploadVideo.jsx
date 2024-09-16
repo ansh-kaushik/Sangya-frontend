@@ -31,7 +31,7 @@ export default function UploadVideo() {
     formData.append("description", description);
     formData.append("videoFile", videoFile);
     formData.append("thumbnail", thumbnail);
-    const res = axios.post(`${BASE_URL}/videos`, formData);
+    const res = axios.post(`${BASE_URL}/videos`, formData, { withCredentials: true });
     // console.log(res);
   };
 

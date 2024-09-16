@@ -27,6 +27,7 @@ export default function UserVideos() {
       params: {
         email: email,
       },
+      withCredentials: true,
     });
     let videos = res.data.data.videos;
     console.log(videos);
