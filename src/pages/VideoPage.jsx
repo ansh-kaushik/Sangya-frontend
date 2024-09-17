@@ -8,6 +8,7 @@ import VideoOutputComment from "../components/VideoCompoents/VideoOutputComment"
 import VideoCard from "../components/VideoCompoents/VideoCard";
 import VideoPlayer from "../components/VideoCompoents/VideoPlayer";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const videoDetails = {
   thumbnail: "./src/assets/thumbnail 1.jpg",
@@ -19,6 +20,7 @@ const videoDetails = {
 };
 export default function VideoPage() {
   const { title, url, channel, channelImage, description } = useSelector((state) => state.video);
+  const { id } = useParams();
   return (
     <PageWrapper>
       {/* Container for the main content */}

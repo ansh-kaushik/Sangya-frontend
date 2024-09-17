@@ -338,6 +338,7 @@ export default function VideoPlayer({ url, title }) {
                     {qualities.map((q, idx) => {
                       return (
                         <MenuItem
+                          selected={curQuality === q}
                           key={idx}
                           onClick={() => {
                             setCurQuality(q);

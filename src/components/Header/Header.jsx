@@ -1,19 +1,12 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import {
-  alpha,
-  Button,
-  IconButton,
-  InputBase,
-  Menu,
-  MenuItem,
-  styled,
-  TextField,
-} from "@mui/material";
+import { alpha, Button, IconButton, InputBase, Menu, MenuItem, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions, UIactions } from "../../store";
+import axios from "axios";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -44,7 +37,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -53,25 +45,38 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
 export default function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth.auth);
   const selectedMenu = useSelector((state) => state.UI.selectedMenu);
   const [anchorEl, setAnchorEl] = useState(null);
-  // console.log(isLoggedIn);
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleProfile = () => {
     dispatch(UIactions.setSelectedMenu({ selectedMenu: undefined }));
     navigate("/profile");
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const dispatch = useDispatch();
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+
+    const BASE_URL = import.meta.env.VITE_BASE_URL;
+    await axios.post(`${BASE_URL}/users/logout`, {}, { withCredentials: true });
+    // Update logout state
+    window.location.reload();
+  };
+
   return (
-    <div className=" sticky top-0 flex items-center justify-between space-x-4 p-4 bg-blue-600 text-white shadow-md   ">
+    <div className="sticky top-0 flex items-center justify-between space-x-4 p-4 bg-blue-600 text-white shadow-md">
       <h1 className="text-xl font-bold">SANGYA</h1>
       {selectedMenu && (
         <Search>
@@ -84,14 +89,7 @@ export default function Header() {
 
       <nav className="space-x-4">
         {!auth ? (
-          <Button
-            onClick={() => {
-              navigate("/login");
-            }}
-            color="inherit"
-            variant="outlined"
-          >
-            {" "}
+          <Button onClick={() => navigate("/login")} color="inherit" variant="outlined">
             Sign In
           </Button>
         ) : (
@@ -109,25 +107,17 @@ export default function Header() {
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
               keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
               <MenuItem onClick={handleProfile}>My account</MenuItem>
-              <MenuItem onClick={() => dispatch(authActions.logout())}>Logout</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
         )}
-
-        {/* Add more navigation items as needed */}
       </nav>
     </div>
   );

@@ -19,6 +19,8 @@ import AppSettings from "./pages/AppSettings";
 import SignUp from "./pages/SignUp";
 import VideoPage from "./pages/VideoPage";
 import UploadVideo from "./pages/UploadVideo";
+import { useDispatch } from "react-redux";
+import { authActions } from "./store";
 
 const getNewKills = async () => {
   // const api_key = "HDEV-8547f177-1188-4cf9-8086-2a8d734ec747";
@@ -39,23 +41,28 @@ const getNewKills = async () => {
 };
 
 function App() {
-  const [kills, setKills] = useState(0);
-
-  const handleRefreshKills = async (e) => {
-    e.preventDefault();
-    let prevKills = localStorage.getItem("kills");
-    console.log(prevKills);
-
-    if (prevKills === null || prevKills === undefined) prevKills = 0;
-    const newKills = await getNewKills();
-    localStorage.setItem("kills", parseInt(prevKills) + newKills);
-    setKills(localStorage.getItem("kills"));
+  const dispatch = useDispatch();
+  const syncAuthSlice = async () => {
+    const BASE_URL = import.meta.env.VITE_BASE_URL;
+    try {
+      const res = await axios.get(`${BASE_URL}/users/getUser`, { withCredentials: true });
+      const user = res.data.data;
+      if (res.status === 200) {
+        dispatch(
+          authActions.login({
+            email: user.email,
+            name: user.fullName,
+            auth: true,
+            avatar: user.avatar,
+          })
+        );
+      }
+    } catch (error) {
+      console.error("Error syncing auth slice:", error);
+    }
   };
-
   useEffect(() => {
-    let prevKills = localStorage.getItem("kills");
-    if (prevKills === undefined || prevKills === null) prevKills = 0;
-    setKills(prevKills);
+    syncAuthSlice();
   }, []);
   return (
     <>
@@ -71,7 +78,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/appSettings" element={<AppSettings />} />
         <Route path="/signUp" element={<SignUp />} />
-        <Route path="/video" element={<VideoPage />} />
+        <Route path="/video/:id" element={<VideoPage />} />
         <Route path="/uploadVideo" element={<UploadVideo />} />
       </Routes>
     </>

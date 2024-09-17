@@ -13,8 +13,7 @@ import { buttonClasses } from "@mui/base/Button";
 import { Tab as BaseTab, tabClasses } from "@mui/base/Tab";
 
 export default function Profile() {
-  const auth = useSelector((state) => state.auth.auth);
-  let { name, email, avatar } = useSelector((state) => state.auth);
+  let { name, email, avatar, auth } = useSelector((state) => state.auth);
 
   const [firstName, lastName] = name.split(" ");
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ export default function Profile() {
 
   useEffect(() => {
     if (!auth) {
-      navigate("/");
+      navigate("/login");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, navigate]);

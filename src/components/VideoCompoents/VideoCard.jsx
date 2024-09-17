@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { videoActions } from "../../store";
 
 const VideoCard = ({
+  id,
   thumbnail,
   title,
   channel,
@@ -27,7 +28,7 @@ const VideoCard = ({
           dispatch(
             videoActions.setVideoDetails({ title, url, channelImage, channel, views, description })
           );
-          navigate("/video");
+          navigate(`/video/${id}`);
         }}
         // style={{ objectFit: "cover" }}
       />

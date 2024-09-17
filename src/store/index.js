@@ -3,6 +3,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 const initialUIState = {
   sideBarOpen: true,
   selectedMenu: "Home",
+  homePageVideos: [],
 };
 
 const initialAuthState = {
@@ -28,6 +29,9 @@ const UISlice = createSlice({
     },
     changeSideBarOpen(state, action) {
       state.sideBarOpen = action.payload;
+    },
+    setHomePageVideos(state, action) {
+      state.homePageVideos = action.payload.homePageVideos;
     },
   },
 });
@@ -60,7 +64,7 @@ const authSlice = createSlice({
       state.avatar = action.payload.avatar;
     },
     logout(state) {
-      state.auth = false;
+      state = initialAuthState;
     },
   },
 });
