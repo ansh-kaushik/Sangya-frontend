@@ -36,7 +36,7 @@ export default function VideoPage() {
             </div>
 
             {/* Video control panel */}
-            <div className="w-full ">
+            <div className="w-full  ">
               <VideoControlPanel
                 videoTitle={title}
                 channelImage={channelImage}

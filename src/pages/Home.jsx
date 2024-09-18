@@ -27,7 +27,7 @@ export default function Home() {
       channelImage: video.owner?.avatar || "./src/assets/channel_icon.png",
       uploadTime: "7 days ago",
     }));
-    console.log(Array.isArray(videos));
+    // console.log(Array.isArray(videos));
 
     dispatch(UIactions.setHomePageVideos({ homePageVideos: videos }));
   };
@@ -37,7 +37,7 @@ export default function Home() {
   }, []);
   return (
     <PageWrapper>
-      <div className="flex flex-wrap gap-1  justify-start items-center overflow-y-auto ">
+      <div className="flex flex-wrap gap-1 dark:text-white dark:bg-zinc-900  justify-start items-center overflow-y-auto ">
         {homePageVideos &&
           homePageVideos.map((videoDetails, idx) => (
             <VideoCard

@@ -3,6 +3,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 const initialUIState = {
   sideBarOpen: true,
   selectedMenu: "Home",
+  darkMode: localStorage.getItem("darkMode") === "true",
   homePageVideos: [],
 };
 
@@ -32,6 +33,10 @@ const UISlice = createSlice({
     },
     setHomePageVideos(state, action) {
       state.homePageVideos = action.payload.homePageVideos;
+    },
+    toggleDarkMode(state) {
+      state.darkMode = !state.darkMode;
+      localStorage.setItem("darkMode", state.darkMode);
     },
   },
 });

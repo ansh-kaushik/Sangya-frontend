@@ -14,7 +14,7 @@ import { Tab as BaseTab, tabClasses } from "@mui/base/Tab";
 
 export default function Profile() {
   let { name, email, avatar, auth } = useSelector((state) => state.auth);
-
+  const { darkMode } = useSelector((state) => state.UI);
   const [firstName, lastName] = name.split(" ");
   const navigate = useNavigate();
   const handleUpdate = (e) => {
@@ -33,10 +33,15 @@ export default function Profile() {
 
   return (
     <PageWrapper>
-      <Container className="shadow-lg h-full p-4 rounded-lg flex flex-col w-full gap-5 max-w-3xl mx-auto bg-white mt-4">
+      <Container className="shadow-lg h-full p-4 rounded-lg flex flex-col w-full gap-5 max-w-3xl dark:bg-zinc-900 dark:text-white mx-auto bg-white mt-4">
         <Box className="flex items-center gap-5 mb-20 ">
           {avatar ? (
-            <img width="100px" src={avatar} alt="avatar" />
+            <img
+              width="100px"
+              className="border-transparent rounded-full"
+              src={avatar}
+              alt="avatar"
+            />
           ) : (
             <AccountCircleIcon sx={{ fontSize: "100px" }} />
           )}

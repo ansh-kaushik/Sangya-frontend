@@ -2,18 +2,24 @@ import React from "react";
 import Sidebar from "./Sidebar";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import { useSelector } from "react-redux";
 
 export default function PageWrapper({ children }) {
+  const darkMode = useSelector((state) => state.UI.darkMode);
+  console.log(darkMode);
+
   return (
-    <div className="flex  h-screen ">
-      <Sidebar />
-      <div className=" relative flex-1 h-full overflow-y-auto">
-        <Header />
-        <div className="overflow-y-auto ">
-          {/* main */}
-          {children}
+    <div className={`${darkMode ? "dark" : ""}`}>
+      <div className="flex   h-screen dark:bg-zinc-900 ">
+        <Sidebar />
+        <div className=" relative flex-1 h-full overflow-y-auto">
+          <Header />
+          <div className="overflow-y-auto dark:text-white  ">
+            {/* main */}
+            {children}
+          </div>
+          <Footer />
         </div>
-        <Footer />
       </div>
     </div>
     // <div className="flex flex-col min-h-screen">

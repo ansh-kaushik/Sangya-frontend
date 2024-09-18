@@ -57,7 +57,7 @@ export default function Login() {
   return (
     <>
       {/* <ToastContainer></ToastContainer> */}
-      <Container maxWidth="xs">
+      <Container maxWidth="xs" className="">
         <Paper elevation={10} sx={{ marginTop: 8, padding: 2 }}>
           <Avatar sx={{ mx: "auto", bgcolor: "secondary.main", textAlign: "center", mb: 1 }}>
             <LockOutlined></LockOutlined>

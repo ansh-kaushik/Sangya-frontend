@@ -1,9 +1,11 @@
 import { AccountCircleOutlined } from "@mui/icons-material";
 import { Avatar, Box, Button, TextField } from "@mui/material";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function VideoInputCommet() {
   const [flag, setFlag] = useState(false);
+  const darkMode = useSelector((state) => state.UI.darkMode);
   const [comment, setComment] = useState("");
   const handleSubmitComment = (e) => {
     e.preventDefault();
@@ -11,7 +13,10 @@ export default function VideoInputCommet() {
   return (
     <>
       <Box component="div" className="mb-4">
-        <Box component="form" className="w-full  flex p-4 gap-3 items-center justify-center">
+        <Box
+          component="form"
+          className="w-full  flex p-4 gap-3 items-center justify-center dark:text-white"
+        >
           <Avatar>
             <AccountCircleOutlined />
           </Avatar>
@@ -21,7 +26,7 @@ export default function VideoInputCommet() {
             onChange={(e) => setComment(e.target.value)}
             name="user_comment"
             onClick={() => setFlag(true)}
-            className="w-full"
+            className="w-full dark:text-white "
             id="standard-basic"
             variant="standard"
           />
@@ -34,6 +39,7 @@ export default function VideoInputCommet() {
                 setFlag(false);
                 setComment("");
               }}
+              className="dark:text-white"
             >
               Cancel
             </Button>
@@ -42,6 +48,13 @@ export default function VideoInputCommet() {
               disabled={comment == "" ? true : false}
               onSubmit={handleSubmitComment}
               variant="contained"
+              sx={{
+                "&.Mui-disabled": {
+                  color: "gray", // Color when disabled
+                  backgroundColor: "rgba(255, 255, 255, 0.12)", // Custom background when disabled
+                },
+              }}
+              className="dark:text-white "
             >
               Comment
             </Button>

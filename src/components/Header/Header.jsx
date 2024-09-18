@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions, UIactions } from "../../store";
 import axios from "axios";
+import { DarkMode, LightMode } from "@mui/icons-material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -50,7 +51,9 @@ export default function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth.auth);
+  const darkMode = useSelector((state) => state.UI.darkMode);
   const selectedMenu = useSelector((state) => state.UI.selectedMenu);
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenu = (event) => {
@@ -74,10 +77,16 @@ export default function Header() {
     // Update logout state
     window.location.reload();
   };
+  const handleDarkModeToggle = () => {
+    dispatch(UIactions.toggleDarkMode());
+  };
+  // console.log(darkMode);
 
   return (
-    <div className="sticky top-0 flex items-center justify-between space-x-4 p-4 bg-blue-600 text-white shadow-md">
-      <h1 className="text-xl font-bold">SANGYA</h1>
+    <div
+      className={` sticky top-0 flex items-center justify-between  space-x-4 p-4 bg-blue-600 dark:bg-zinc-900 text-white shadow-md`}
+    >
+      <h1 className="text-xl font-bold dark:text-blue-700">SANGYA</h1>
       {selectedMenu && (
         <Search>
           <SearchIconWrapper>
@@ -87,7 +96,16 @@ export default function Header() {
         </Search>
       )}
 
-      <nav className="space-x-4">
+      <nav className="space-x-4 flex ">
+        {
+          <Button onClick={handleDarkModeToggle}>
+            {!darkMode ? (
+              <DarkMode sx={{ color: "black" }} />
+            ) : (
+              <LightMode sx={{ color: "white" }} />
+            )}
+          </Button>
+        }
         {!auth ? (
           <Button onClick={() => navigate("/login")} color="inherit" variant="outlined">
             Sign In

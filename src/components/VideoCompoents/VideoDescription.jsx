@@ -20,13 +20,13 @@ const Description = ({ text, showBorder = true }) => {
 
   return (
     <div
-      className={` prose relative pb-4 min-w-full  ${showBorder ? "border rounded-xl p-4 bg-gray-200" : ""}`}
+      className={` prose relative pb-4 min-w-full  ${showBorder ? "border rounded-xl p-4 bg-gray-200 dark:text-white dark:bg-zinc-800 dark:border-transparent" : ""}`}
     >
-      {showBorder && <h4>Description</h4>}
+      {showBorder && <h4 className=" dark:text-white ">Description</h4>}
       <Typography
         variant="subtitle2"
         ref={contentRef}
-        className={`text-gray-700 ${isExpanded ? "" : "line-clamp-3"} mb-2`}
+        className={`text-gray-700 ${isExpanded ? "" : "line-clamp-3"} dark:text-white mb-2`}
         style={{ maxHeight: isExpanded ? "none" : `${maxHeight}px`, overflow: "hidden" }}
       >
         {text}

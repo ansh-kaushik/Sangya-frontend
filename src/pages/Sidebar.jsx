@@ -9,6 +9,7 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useDispatch, useSelector } from "react-redux";
 import { UIactions } from "../store";
+import logo from "../assets/logo.png";
 export default function Sidebar(props) {
   // console.log(props.location.pathname);
 
@@ -60,7 +61,7 @@ export default function Sidebar(props) {
       <div
         className={`${
           open ? "w-72" : "w-20"
-        }  duration-300 h-screen p-5 pt-8 bg-dark-purple relative `}
+        }  duration-300 h-screen p-5 pt-8 dark:bg-zinc-900 bg-dark-purple  relative `}
       >
         {/* <img
           src="./src/assets/control.png"
@@ -71,12 +72,13 @@ export default function Sidebar(props) {
         /> */}
         <div className="flex gap-x-4 items-center">
           <img
-            src="./src/assets/logo.png"
+            src={logo}
             alt=""
-            className={`cursor-pointer duration-700 ${open && "rotate-[360deg]"}`}
+            // height="100px"
+            className={`cursor-pointer  duration-700 ${open && "rotate-[360deg]"}`}
           />
           <h1
-            className={`text-white origin-left font-medium text-xl duration-300 ${
+            className={`text-white dark:text-blue-700 origin-left font-medium text-xl duration-300 ${
               !open && "scale-0"
             }`}
           >

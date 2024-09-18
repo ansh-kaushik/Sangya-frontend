@@ -40,7 +40,7 @@ export default function UploadVideo() {
       <Container maxWidth="lg">
         <Box component="div" className="flex  flex-wrap gap-4">
           <Box component="form" className="prose">
-            <h1 className="">Upload Video</h1>
+            <h1 className="dark:text-white">Upload Video</h1>
 
             <TextField
               sx={{ mb: 2 }}
