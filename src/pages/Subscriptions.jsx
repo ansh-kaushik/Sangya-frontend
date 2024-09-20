@@ -20,7 +20,7 @@ export default function Subscriptions() {
           <h2 className="text-lg font-semibold">Subscriptions</h2>
           <ul className="m-2 p-4 h-[calc(80vh-40px)] overflow-y-auto">
             {Array.from({ length: 20 }, (_, idx) => (
-              <li key={idx} className="p-3 hover:bg-gray-100 rounded cursor-pointer">
+              <li key={idx} className="p-3 hover:bg-gray-500 rounded cursor-pointer  ">
                 Code with C++
               </li>
             ))}

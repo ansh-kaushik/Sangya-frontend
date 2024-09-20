@@ -10,6 +10,7 @@ const initialUIState = {
 const initialAuthState = {
   auth: false,
   email: undefined,
+  id: undefined,
   name: "User Name",
   avatar: undefined,
 };
@@ -67,6 +68,7 @@ const authSlice = createSlice({
       state.email = action.payload.email;
       state.name = action.payload.name;
       state.avatar = action.payload.avatar;
+      state.id = action.payload.id;
     },
     logout(state) {
       state = initialAuthState;

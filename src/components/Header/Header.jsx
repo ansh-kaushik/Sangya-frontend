@@ -86,7 +86,12 @@ export default function Header() {
     <div
       className={` sticky top-0 flex items-center justify-between  space-x-4 p-4 bg-blue-600 dark:bg-zinc-900 text-white shadow-md`}
     >
-      <h1 className="text-xl font-bold dark:text-blue-700">SANGYA</h1>
+      <h1
+        onClick={() => navigate("/")}
+        className="text-xl hover:cursor-pointer font-bold dark:text-blue-700"
+      >
+        SANGYA
+      </h1>
       {selectedMenu && (
         <Search>
           <SearchIconWrapper>
@@ -100,7 +105,7 @@ export default function Header() {
         {
           <Button onClick={handleDarkModeToggle}>
             {!darkMode ? (
-              <DarkMode sx={{ color: "black" }} />
+              <DarkMode sx={{ color: "#36454F" }} />
             ) : (
               <LightMode sx={{ color: "white" }} />
             )}

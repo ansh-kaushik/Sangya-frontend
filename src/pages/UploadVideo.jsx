@@ -117,8 +117,8 @@ export default function UploadVideo() {
               Upload
             </Button>
           </Box>
-          <Box className="prose">
-            <h4 className="py-2">Thumbnail : {thumbnail && thumbnail.name}</h4>
+          <Box className="prose ">
+            <h4 className="py-2 dark:text-white">Thumbnail : {thumbnail && thumbnail.name}</h4>
             {!thumbnailImage ? (
               <div className="h-60 aspect-video bg-slate-200"></div>
             ) : (
@@ -127,7 +127,7 @@ export default function UploadVideo() {
               </div>
             )}
 
-            <h4>Video File: {videoFile && videoFile.name}</h4>
+            <h4 className="dark:text-white">Video File: {videoFile && videoFile.name}</h4>
           </Box>
         </Box>
       </Container>

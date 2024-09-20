@@ -46,7 +46,9 @@ function App() {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
     try {
       const res = await axios.get(`${BASE_URL}/users/getUser`, { withCredentials: true });
+
       const user = res.data.data;
+      console.log(user);
       if (res.status === 200) {
         dispatch(
           authActions.login({
@@ -54,6 +56,7 @@ function App() {
             name: user.fullName,
             auth: true,
             avatar: user.avatar,
+            id: user._id,
           })
         );
       }

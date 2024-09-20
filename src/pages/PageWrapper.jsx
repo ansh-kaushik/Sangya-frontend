@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 export default function PageWrapper({ children }) {
   const darkMode = useSelector((state) => state.UI.darkMode);
-  console.log(darkMode);
+  // console.log(darkMode);
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
