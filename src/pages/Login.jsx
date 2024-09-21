@@ -43,7 +43,12 @@ export default function Login() {
     // console.log(data);
     if (data.statusCode == 200) {
       dispatch(
-        authActions.login({ email, name: data.data.user.fullName, avatar: data.data.user.avatar })
+        authActions.login({
+          email,
+          name: data.data.user.fullName,
+          avatar: data.data.user.avatar,
+          id: data.data.user._id,
+        })
       );
       localStorage.setItem("avatar", data.data.user.avatar);
       localStorage.setItem("name", data.data.user.fullName);

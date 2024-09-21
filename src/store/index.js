@@ -5,6 +5,7 @@ const initialUIState = {
   selectedMenu: "Home",
   darkMode: localStorage.getItem("darkMode") === "true",
   homePageVideos: [],
+  playlists: [],
 };
 
 const initialAuthState = {
@@ -38,6 +39,9 @@ const UISlice = createSlice({
     toggleDarkMode(state) {
       state.darkMode = !state.darkMode;
       localStorage.setItem("darkMode", state.darkMode);
+    },
+    setPlaylists(state, action) {
+      state.playlists = action.payload.playlists;
     },
   },
 });

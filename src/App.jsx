@@ -48,7 +48,7 @@ function App() {
       const res = await axios.get(`${BASE_URL}/users/getUser`, { withCredentials: true });
 
       const user = res.data.data;
-      console.log(user);
+      // console.log(user);
       if (res.status === 200) {
         dispatch(
           authActions.login({
