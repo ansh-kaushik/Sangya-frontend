@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageWrapper from "./PageWrapper";
 import { Container, Typography } from "@mui/material";
 import VideoControlPanel from "../components/VideoCompoents/VideoControlPanel";
@@ -7,8 +7,10 @@ import VideoInputComment from "../components/VideoCompoents/VideoInputCommet";
 import VideoOutputComment from "../components/VideoCompoents/VideoOutputComment";
 import VideoCard from "../components/VideoCompoents/VideoCard";
 import VideoPlayer from "../components/VideoCompoents/VideoPlayer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import axiosInstance from "../services/axiosInstance";
+import { videoActions } from "../store";
 
 const videoDetails = {
   thumbnail: "./src/assets/thumbnail 1.jpg",
@@ -18,9 +20,47 @@ const videoDetails = {
   channelImage: "./src/assets/channel_icon.png",
   uploadTime: "7 days ago",
 };
+
 export default function VideoPage() {
-  const { title, url, channel, channelImage, description } = useSelector((state) => state.video);
+  const { title, url, channel, channelImage, description, channelID } = useSelector(
+    (state) => state.video
+  );
+  // console.log(channelID);
+  const dispatch = useDispatch();
+  const [subsCnt, setSubsCnt] = useState(0);
   const { id } = useParams();
+  const getChannelSubs = async () => {
+    const res = await axiosInstance.get(`/subscriptions/s/${channelID}`);
+    const subs = res.data.data.subscribers;
+    // console.log(subs, "🤣🤣🤣");
+    setSubsCnt(subs.length);
+  };
+  const getVideoByID = async () => {
+    const res = await axiosInstance.get(`/videos/${id}`);
+    // console.log(res.data.data.owner.avatar);
+    if (res.status === 200) {
+      const data = res.data.data;
+      dispatch(
+        videoActions.setVideoDetails({
+          title: data.title,
+          description: data.description,
+          url: data.videoFile,
+          channelImage: data.owner?.avatar,
+          channel: data.owner?.username,
+          channelID: data.owner?._id,
+        })
+      );
+    }
+    const data = res.data;
+  };
+  useEffect(() => {
+    if (channelID) {
+      getChannelSubs();
+    }
+  }, [channelID]);
+  useEffect(() => {
+    getVideoByID();
+  }, []);
   return (
     <PageWrapper>
       {/* Container for the main content */}
@@ -38,10 +78,12 @@ export default function VideoPage() {
             {/* Video control panel */}
             <div className="w-full  ">
               <VideoControlPanel
+                subsCnt={subsCnt}
                 videoId={id}
                 videoTitle={title}
                 channelImage={channelImage}
                 channelName={channel}
+                channelID={channelID}
               />
             </div>
 

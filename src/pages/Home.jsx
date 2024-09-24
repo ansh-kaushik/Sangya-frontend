@@ -15,7 +15,7 @@ export default function Home() {
   const getAllVideosDetails = async () => {
     const res = await axios.get(URL);
     let videos = res.data.videos;
-    // console.log(videos);
+    console.log(videos);
     videos = videos.map((video) => ({
       id: video._id,
       thumbnail: video.thumbnail,
@@ -24,6 +24,7 @@ export default function Home() {
       url: video.videoFile,
       description: video.description,
       channel: video.owner?.username || "Sangya",
+      channelID: video.owner?._id || "undefined",
       channelImage: video.owner?.avatar || "./src/assets/channel_icon.png",
       uploadTime: "7 days ago",
     }));
@@ -41,6 +42,7 @@ export default function Home() {
         {homePageVideos &&
           homePageVideos.map((videoDetails, idx) => (
             <VideoCard
+              channelID={videoDetails.channelID}
               id={videoDetails.id}
               key={idx}
               description={videoDetails.description}

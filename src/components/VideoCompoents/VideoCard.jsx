@@ -15,12 +15,21 @@ const VideoCard = ({
   sidebar,
   url,
   description,
+  channelID,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleVideoPage = ({ title, url, channelImage, channel, views, description }) => {
     dispatch(
-      videoActions.setVideoDetails({ title, url, channelImage, channel, views, description })
+      videoActions.setVideoDetails({
+        title,
+        url,
+        channelImage,
+        channel,
+        views,
+        description,
+        channelID,
+      })
     );
     navigate(`/video/${id}`);
   };

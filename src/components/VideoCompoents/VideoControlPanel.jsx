@@ -26,13 +26,22 @@ import axiosInstance from "../../services/axiosInstance";
 import { UIactions } from "../../store";
 import axios from "axios";
 
-export default function VideoControlPanel({ channelName, videoTitle, videoId }) {
+export default function VideoControlPanel({
+  channelName,
+  videoTitle,
+  videoId,
+  subsCnt,
+  channelID,
+}) {
   const [openDialog, setOpenDialog] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const { playlists } = useSelector((state) => state.UI);
+  const { playlists, subscriptions } = useSelector((state) => state.UI);
   const [addMenuOpen, setAddMenuOpen] = useState(false);
   const userID = useSelector((state) => state.auth.id);
+  console.log(subscriptions);
+
+  const isSub = subscriptions.some((sub) => sub.channel?._id === channelID);
   const dispatch = useDispatch();
   let checkedPlaylists = playlists.filter((playlist) =>
     playlist.videos.some((video) => video._id === videoId)
@@ -97,6 +106,13 @@ export default function VideoControlPanel({ channelName, videoTitle, videoId }) 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
+
+  const handleSubscribe = async () => {
+    const res = await axiosInstance.post(`/subscriptions/${channelID}`);
+    console.log(res.data);
+    const res1 = await axiosInstance.get(`/subscriptions/c/${userID}`);
+    dispatch(UIactions.setSubscriptions({ subscriptions: res1.data.data.channels }));
+  };
   useEffect(() => {
     if (userID) {
       getAllPlaylists();
@@ -121,14 +137,20 @@ export default function VideoControlPanel({ channelName, videoTitle, videoId }) 
               {channelName ? channelName : "Sangya"}
             </Typography>
             <Typography variant="body2" className="text-gray-600 dark:text-white">
-              1.5M subscribers
+              {subsCnt} subscribers
             </Typography>
           </Link>
           <button
+            onClick={handleSubscribe}
             type="button"
-            className="border rounded-full bg-red-600 text-white px-4 py-1 hover:bg-red-400 transition-all duration-300"
+            className={`border rounded-full ${
+              isSub
+                ? "bg-gray-200 hover:bg-gray-300 dark:bg-zinc-800"
+                : "bg-red-600 hover:bg-red-400 dark:bg-red-600"
+            }
+             text-black dark:text-white  px-4 py-1  transition-all duration-300`}
           >
-            Subscribe
+            {isSub ? "Subscribed" : "Subscribe"}
           </button>
         </div>
         <div className="flex gap-2 items-center">

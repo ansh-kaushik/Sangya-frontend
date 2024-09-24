@@ -19,8 +19,9 @@ import AppSettings from "./pages/AppSettings";
 import SignUp from "./pages/SignUp";
 import VideoPage from "./pages/VideoPage";
 import UploadVideo from "./pages/UploadVideo";
-import { useDispatch } from "react-redux";
-import { authActions } from "./store";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions, UIactions } from "./store";
+import axiosInstance from "./services/axiosInstance";
 
 const getNewKills = async () => {
   // const api_key = "HDEV-8547f177-1188-4cf9-8086-2a8d734ec747";
@@ -42,6 +43,7 @@ const getNewKills = async () => {
 
 function App() {
   const dispatch = useDispatch();
+  const { id } = useSelector((state) => state.auth);
   const syncAuthSlice = async () => {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
     try {
@@ -64,9 +66,18 @@ function App() {
       console.error("Error syncing auth slice:", error);
     }
   };
+
+  const syncUISlice = async () => {
+    const res = await axiosInstance.get(`/subscriptions/c/${id}`);
+    // console.log(res.data.data.channels);
+    dispatch(UIactions.setSubscriptions({ subscriptions: res.data.data.channels }));
+  };
   useEffect(() => {
     syncAuthSlice();
   }, []);
+  useEffect(() => {
+    syncUISlice();
+  }, [id]);
   return (
     <>
       <Routes>

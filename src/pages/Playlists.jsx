@@ -95,7 +95,7 @@ export default function Playlists() {
           <h2 className="fontbold text-normal">{playlistName}</h2>
 
           <div>
-            <Button onClick={handleMenu}>
+            <Button sx={{ p: 0 }} onClick={handleMenu}>
               <MoreVert />
             </Button>
             <Menu
@@ -113,8 +113,7 @@ export default function Playlists() {
               onClose={handleClose}
             >
               <MenuItem onClick={() => handleDeletePlaylist(playlist._id)}>
-                <Delete />
-                Delete
+                <Delete /> Delete
               </MenuItem>
             </Menu>
           </div>

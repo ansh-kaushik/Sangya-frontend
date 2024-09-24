@@ -6,6 +6,7 @@ const initialUIState = {
   darkMode: localStorage.getItem("darkMode") === "true",
   homePageVideos: [],
   playlists: [],
+  subscriptions: [],
 };
 
 const initialAuthState = {
@@ -20,6 +21,7 @@ const initialVideoSlice = {
   title: undefined,
   channelImage: undefined,
   channel: undefined,
+  channelID: undefined,
   views: undefined,
   description: undefined,
 };
@@ -43,6 +45,9 @@ const UISlice = createSlice({
     setPlaylists(state, action) {
       state.playlists = action.payload.playlists;
     },
+    setSubscriptions(state, action) {
+      state.subscriptions = action.payload.subscriptions;
+    },
   },
 });
 const videoSlice = createSlice({
@@ -50,9 +55,10 @@ const videoSlice = createSlice({
   initialState: initialVideoSlice,
   reducers: {
     setVideoDetails(state, action) {
-      const { title, url, channelImage, channel, views, description } = action.payload;
+      const { title, url, channelImage, channel, views, description, channelID } = action.payload;
       return {
         ...state,
+        channelID,
         title,
         url,
         channelImage,
