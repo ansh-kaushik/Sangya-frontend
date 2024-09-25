@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageWrapper from "./PageWrapper";
 import VideoCard from "../components/VideoCompoents/VideoCard";
 import { useSelector } from "react-redux";
+// import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 
 const videoDetails = {
   thumbnail: "./src/assets/thumbnail 1.jpg",
@@ -14,7 +16,20 @@ const videoDetails = {
 
 export default function Subscriptions() {
   const subs = useSelector((state) => state.UI.subscriptions);
-  console.log(subs);
+  const [subsVideos, setSubsVideos] = useState([]);
+  // console.log(subs);
+
+  const getSubsVideos = async () => {
+    const res = await axiosInstance.get("/videos/subsVideos");
+    // console.log(res.data);
+
+    setSubsVideos(res.data.videos);
+  };
+
+  useEffect(() => {
+    getSubsVideos();
+  }, [subs]);
+  // console.log(subsVideos[0].createdAt);
 
   return (
     <PageWrapper>
@@ -43,17 +58,18 @@ export default function Subscriptions() {
           {/* Scrollable content */}
           <div className="overflow-y-auto h-[calc(80vh-40px)]">
             <div className="flex flex-wrap gap-2">
-              {Array.from({ length: 20 }, (_, idx) => (
-                <VideoCard
-                  key={idx}
-                  channelImage={videoDetails.channelImage}
-                  thumbnail={videoDetails.thumbnail}
-                  title={videoDetails.title}
-                  views={videoDetails.views}
-                  channel={videoDetails.channel}
-                  uploadTime={videoDetails.uploadTime}
-                />
-              ))}
+              {subsVideos.length > 0 &&
+                subsVideos.map((_, idx) => (
+                  <VideoCard
+                    key={idx}
+                    channelImage={_.owner.avatar}
+                    thumbnail={_.thumbnail}
+                    title={_.title}
+                    views={_.views}
+                    channel={_.owner.username}
+                    uploadTime={_.createdAt}
+                  />
+                ))}
             </div>
           </div>
         </div>

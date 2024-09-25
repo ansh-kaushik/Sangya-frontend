@@ -41,7 +41,7 @@ export default function UserVideos() {
       description: video.description,
       channel: video.owner?.username || "Sangya",
       channelImage: video.owner?.avatar || "./src/assets/channel_icon.png",
-      uploadTime: "7 days ago",
+      uploadTime: video.createdAt,
     }));
     setUserVideos(videos);
   };

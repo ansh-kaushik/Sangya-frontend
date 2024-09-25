@@ -26,7 +26,7 @@ export default function Home() {
       channel: video.owner?.username || "Sangya",
       channelID: video.owner?._id || "undefined",
       channelImage: video.owner?.avatar || "./src/assets/channel_icon.png",
-      uploadTime: "7 days ago",
+      uploadTime: video.createdAt,
     }));
     // console.log(Array.isArray(videos));
 
