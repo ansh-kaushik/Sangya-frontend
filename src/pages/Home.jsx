@@ -11,7 +11,8 @@ import { UIactions } from "../store";
 export default function Home() {
   const { homePageVideos } = useSelector((state) => state.UI);
   const dispatch = useDispatch();
-  const URL = "http://localhost:8000/api/v1/videos";
+  // const URL = "http://localhost:8000/api/v1/videos";
+  const URL = `${import.meta.env.VITE_BASE_URL}/videos`;
   const getAllVideosDetails = async () => {
     const res = await axios.get(URL);
     let videos = res.data.videos;

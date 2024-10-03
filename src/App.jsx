@@ -72,11 +72,11 @@ function App() {
     // console.log(res.data.data.channels);
     dispatch(UIactions.setSubscriptions({ subscriptions: res.data.data.channels }));
   };
+
   useEffect(() => {
-    syncAuthSlice();
-  }, []);
-  useEffect(() => {
-    syncUISlice();
+    if (id) {
+      syncUISlice();
+    }
   }, [id]);
   return (
     <>

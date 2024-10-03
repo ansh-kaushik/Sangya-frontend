@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
@@ -9,23 +9,16 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useDispatch, useSelector } from "react-redux";
 import { UIactions } from "../store";
-import logo from "../assets/logo.png";
-export default function Sidebar(props) {
-  // console.log(props.location.pathname);
+import { MenuOutlined } from "@mui/icons-material";
 
-  // const [open, setOpen] = useState(true);
+export default function Sidebar() {
   const selectedMenu = useSelector((state) => state.UI.selectedMenu);
   const open = useSelector((state) => state.UI.sideBarOpen);
-  // console.log(selectedMenu);
   const dispatch = useDispatch();
+
   const Menus = [
-    { title: "Home", src: "Chart_fill", link: "", icon: <HomeIcon /> },
-    {
-      title: "Subsciptions",
-      src: "subscriptions",
-      link: "subscriptions",
-      icon: <SubscriptionsIcon />,
-    },
+    { title: "Home", icon: <HomeIcon />, link: "" },
+    { title: "Subscriptions", icon: <SubscriptionsIcon />, link: "subscriptions" },
     { title: "Your Videos", gap: true, icon: <VideoLibraryIcon />, link: "myVideos" },
     { title: "History", icon: <HistoryIcon />, link: "watchHistory" },
     { title: "Playlists", icon: <PlaylistPlayIcon />, link: "myPlaylists" },
@@ -33,49 +26,21 @@ export default function Sidebar(props) {
     { title: "Settings", icon: <SettingsIcon />, gap: true, link: "appSettings" },
   ];
 
-  useEffect(() => {
-    function handleMouseEnter(e) {
-      e.stopPropagation();
-      // setOpen(true);
-      dispatch(UIactions.changeSideBarOpen(true));
-    }
-    function handleMouseLeave(e) {
-      e.stopPropagation();
-      // setOpen(false);
-      dispatch(UIactions.changeSideBarOpen(false));
-    }
-    const sidebar = document.getElementById("sidebar");
-    if (!sidebar) return;
-    sidebar.addEventListener("mouseenter", handleMouseEnter);
-    sidebar.addEventListener("mouseleave", handleMouseLeave);
-    // console.log(sidebar);
-
-    return () => {
-      sidebar.addEventListener("mouseenter", handleMouseEnter);
-      sidebar.addEventListener("mouseleave", handleMouseLeave);
-    };
-  }, []);
-  useEffect(() => {}, []);
   return (
-    <div id="sidebar" className="flex  sticky left-0">
+    <div
+      id="sidebar"
+      className={`sm:flex absolute sidebar   ${!open ? "hidden  " : ""}  left-0 z-50`}
+    >
       <div
         className={`${
           open ? "w-72" : "w-20"
-        }  duration-300 h-screen p-5 pt-8 dark:bg-zinc-900 bg-dark-purple  relative `}
+        } h-screen p-5 pt-8 dark:bg-zinc-900 bg-dark-purple   transition-all duration-300 `}
       >
-        {/* <img
-          src="./src/assets/control.png"
-          className={`absolute cursor-pointer rounded-full -right-3 top-9 w-7 border-2 border-dark-purple ${
-            !open && "rotate-180"
-          }`}
-          onClick={() => setOpen(!open)}
-        /> */}
-        <div className="flex gap-x-4 items-center">
-          <img
-            src={logo}
-            alt=""
-            // height="100px"
-            className={`cursor-pointer  duration-700 ${open && "rotate-[360deg]"}`}
+        <div className="flex items-center gap-x-4">
+          <MenuOutlined
+            onClick={() => dispatch(UIactions.changeSideBarOpen(!open))}
+            className={`cursor-pointer duration-700 ${open && "rotate-[360deg]"}`}
+            sx={{ color: "white" }}
           />
           <h1
             className={`text-white dark:text-blue-700 origin-left font-medium text-xl duration-300 ${
@@ -93,12 +58,11 @@ export default function Sidebar(props) {
                 onClick={() => dispatch(UIactions.setSelectedMenu({ selectedMenu: menu.title }))}
                 className={`text-gray-200 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${
                   menu.gap ? "mt-9" : "mt-2"
-                }  ${selectedMenu === menu.title ? "bg-light-white" : "bg-transparent"}`}
+                } ${selectedMenu === menu.title ? "bg-light-white" : "bg-transparent"}`}
               >
-                {/* <img src={`./src/assets/${menu.src}.png`} className="w-6 h-6 object-contain" /> */}
                 {menu.icon}
                 <span
-                  className={`${!open && "scale-0"} origin-left text-gray-200  text-sm duration-300`}
+                  className={`${!open && "scale-0"} origin-left text-gray-200 text-sm duration-300`}
                 >
                   {menu.title}
                 </span>

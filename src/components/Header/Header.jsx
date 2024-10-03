@@ -1,48 +1,54 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { alpha, Button, IconButton, InputBase, Menu, MenuItem, styled } from "@mui/material";
+import {
+  alpha,
+  Button,
+  IconButton,
+  InputBase,
+  Menu,
+  MenuItem,
+  styled,
+  TextField,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions, UIactions } from "../../store";
 import axios from "axios";
-import { DarkMode, LightMode } from "@mui/icons-material";
+import { DarkMode, DarkModeRounded, LightMode, MenuOutlined } from "@mui/icons-material";
+import { Input } from "postcss";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
+  // backgroundColor: alpha(theme.palette.common.white, 0.15),
+  // "&:hover": {
+  //   backgroundColor: alpha(theme.palette.common.white, 0.25),
+  // },
+  // marginRight: theme.spacing(2),
+  // marginLeft: 0,
+  // width: "100%",
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+  // padding: theme.spacing(0, 2),
+  backgroundColor: "transparent", // Set background to transparent
   height: "100%",
-  position: "absolute",
   pointerEvents: "none",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 }));
-
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "50ch",
+      width: "20ch",
     },
   },
 }));
@@ -53,7 +59,7 @@ export default function Header() {
   const auth = useSelector((state) => state.auth.auth);
   const darkMode = useSelector((state) => state.UI.darkMode);
   const selectedMenu = useSelector((state) => state.UI.selectedMenu);
-
+  const open = useSelector((state) => state.UI.sidebarOpen);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenu = (event) => {
@@ -86,30 +92,41 @@ export default function Header() {
     <div
       className={` sticky top-0 flex items-center justify-between  space-x-4 p-4 bg-blue-600 dark:bg-zinc-900 text-white shadow-md`}
     >
-      <h1
-        onClick={() => navigate("/")}
-        className="text-xl hover:cursor-pointer font-bold dark:text-blue-700"
-      >
-        SANGYA
-      </h1>
-      {selectedMenu && (
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
-        </Search>
-      )}
+      {/* left div */}
+      <div className="flex">
+        <h1
+          onClick={() => navigate("/")}
+          className="text-xl hover:cursor-pointer font-bold dark:text-blue-700"
+        >
+          <span
+            onClick={() => dispatch(UIactions.changeSideBarOpen(!open))}
+            className="sm:hidden text-white"
+          >
+            <MenuOutlined className="mr-2" />
+          </span>
+          SANGYA
+        </h1>
+      </div>
+      {/* right div */}
 
-      <nav className="space-x-4 flex ">
+      <nav className="flex gap-4 items-center justify-center">
+        <IconButton>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+          </Search>
+        </IconButton>
         {
-          <Button onClick={handleDarkModeToggle}>
-            {!darkMode ? (
-              <DarkMode sx={{ color: "#36454F" }} />
-            ) : (
-              <LightMode sx={{ color: "white" }} />
-            )}
-          </Button>
+          <span className="hidden  sm:block ">
+            <IconButton onClick={handleDarkModeToggle}>
+              {!darkMode ? (
+                <DarkModeRounded sx={{ color: "black" }} />
+              ) : (
+                <LightMode sx={{ color: "white" }} />
+              )}
+            </IconButton>
+          </span>
         }
         {!auth ? (
           <Button onClick={() => navigate("/login")} color="inherit" variant="outlined">

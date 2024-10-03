@@ -35,11 +35,13 @@ const VideoCard = ({
     navigate(`/video/${id}`);
   };
   return (
-    <div className={`max-w-xs   ${sidebar ? "flex items-center my-0 mx-2" : "m-4"} `}>
+    <div
+      className={`w-full aspect-video  md:w-1/4 lg:w-1/5 ${sidebar ? "flex   items-center my-0 mx-2" : "m-4"} `}
+    >
       <img
         src={thumbnail}
         alt={title}
-        className={`rounded-xl hover:cursor-pointer hover:rounded-lg  transition-all duration-300 aspect-video dark:hover:shadow-lg dark:hover:shadow-orange-300 ${sidebar ? "w-40" : "w-50"}`}
+        className={`rounded-xl hover:cursor-pointer hover:rounded-lg  transition-all duration-300 aspect-video dark:hover:shadow-lg dark:hover:shadow-orange-300 `}
         onClick={() => handleVideoPage({ title, url, channelImage, channel, views, description })}
         // style={{ objectFit: "cover" }}
       />
