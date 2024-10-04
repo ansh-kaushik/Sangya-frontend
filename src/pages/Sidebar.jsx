@@ -9,11 +9,12 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useDispatch, useSelector } from "react-redux";
 import { UIactions } from "../store";
-import { MenuOutlined } from "@mui/icons-material";
+import { DarkMode, LightMode, MenuOutlined } from "@mui/icons-material";
 
 export default function Sidebar() {
   const selectedMenu = useSelector((state) => state.UI.selectedMenu);
   const open = useSelector((state) => state.UI.sideBarOpen);
+  const darkMode = useSelector((state) => state.UI.darkMode);
   const dispatch = useDispatch();
 
   const Menus = [
@@ -69,6 +70,19 @@ export default function Sidebar() {
               </li>
             </Link>
           ))}
+          {/* UI THEME MODE */}
+          <li
+            key={Menus.length}
+            onClick={() => dispatch(UIactions.toggleDarkMode())}
+            className={`text-gray-200 text-sm sm:hidden flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${"mt-9"}`}
+          >
+            {darkMode ? <LightMode /> : <DarkMode />}
+            <span
+              className={`${!open && "scale-0"} origin-left text-gray-200 text-sm duration-300`}
+            >
+              {darkMode ? "Light Mode" : "Dark Mode"}
+            </span>
+          </li>
         </ul>
       </div>
     </div>

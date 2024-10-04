@@ -12,10 +12,10 @@ export default function VideoInputCommet() {
   };
   return (
     <>
-      <Box component="div" className="mb-4">
+      <Box component="div" className="mb-4 sm:border-none   border-t-2-2 border border-t-black ">
         <Box
           component="form"
-          className="w-full  flex p-4 gap-3 items-center justify-center dark:text-white"
+          className="w-full  flex p-2 gap-3 items-center justify-center dark:text-white"
         >
           <Avatar>
             <AccountCircleOutlined />

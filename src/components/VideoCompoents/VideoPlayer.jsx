@@ -242,7 +242,7 @@ export default function VideoPlayer({ url, title }) {
             <Slider
               sx={{
                 width: "98%",
-                ml: "0",
+                ml: "25px",
                 mr: "20px",
                 height: "4px",
               }}
@@ -298,6 +298,7 @@ export default function VideoPlayer({ url, title }) {
                       onChange={(e) =>
                         setVideoState((prev) => ({ ...prev, inputVolume: e.target.value }))
                       }
+
                       // className={`range-input bg-gray-200 rounded-full transition-all duration-300 ${!videoState.showVolumeBar && "scale-0"}`}
                     />
                   )}

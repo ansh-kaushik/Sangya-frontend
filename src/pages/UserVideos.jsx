@@ -52,7 +52,7 @@ export default function UserVideos() {
   return (
     <PageWrapper>
       {!auth ? (
-        <div className="flex flex-col items-center justify-center h-64 bg-gray-100 dark:bg-zinc-900 rounded-lg shadow-md p-6">
+        <div className="flex flex-col text-center items-center justify-center h-64 bg-gray-100 dark:bg-zinc-900 rounded-lg shadow-md p-6">
           <h2 className="text-2xl font-bold text-gray-700 mb-4 dark:text-white">
             Please log in to upload
           </h2>

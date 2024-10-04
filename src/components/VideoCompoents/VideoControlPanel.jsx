@@ -16,6 +16,7 @@ import {
   Grow,
   TextField,
   Box,
+  IconButton,
 } from "@mui/material";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
@@ -126,20 +127,25 @@ export default function VideoControlPanel({
           {videoTitle}
         </h2>
       </div>
-      <div className="flex justify-between">
-        <div className="flex gap-3 justify-center items-center">
-          <AccountCircleIcon fontSize="large" />
-          <Link underline="none" className="hover:cursor-pointer">
-            <Typography
-              variant="h7"
-              className="font-semibold text-gray-800 dark:text-white text-lg"
+      <div className="flex justify-start sm:justify-between w-full sm:w-auto flex-wrap gap-y-4  mb-2">
+        <div className="flex gap-3 w-full sm:w-auto sm:justify-center justify-between items-center">
+          <div className="  flex items-center justify-center gap-2">
+            <AccountCircleIcon fontSize="large" />
+            <Link
+              underline="none"
+              className="hover:cursor-pointer flex gap-2 justify-center items-center sm:block "
             >
-              {channelName ? channelName : "Sangya"}
-            </Typography>
-            <Typography variant="body2" className="text-gray-600 dark:text-white">
-              {subsCnt} subscribers
-            </Typography>
-          </Link>
+              <Typography
+                variant="h7"
+                className="font-semibold text-gray-800 dark:text-white text-lg"
+              >
+                {channelName ? channelName : "Sangya"}
+              </Typography>
+              <Typography variant="body2" className="text-gray-600 dark:text-white sm:flex gap-1">
+                {subsCnt} <span className="hidden sm:block">subscribers</span>
+              </Typography>
+            </Link>
+          </div>
           <button
             onClick={handleSubscribe}
             type="button"
@@ -153,7 +159,7 @@ export default function VideoControlPanel({
             {isSub ? "Subscribed" : "Subscribe"}
           </button>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex sm:gap-2 gap-4  ml-2 items-center">
           <button
             type="button"
             className="text-black dark:text-white hover:text-blue-600 transition-all duration-300"
@@ -169,7 +175,7 @@ export default function VideoControlPanel({
           {/* Save button that opens the dialog */}
           <button
             type="button"
-            className="text-black dark:text-white dark:bg-zinc-800 px-3 dark:hover:bg-zinc-700 rounded-full py-1 hover:text-green-600 transition-all duration-300"
+            className="text-black dark:text-white bg-gray-200 dark:bg-zinc-800 px-3 dark:hover:bg-zinc-700 rounded-full py-1 hover:text-green-600 transition-all duration-300"
             onClick={handleClickOpen}
           >
             <TurnedInNot sx={{ mr: 1 }} />
@@ -179,7 +185,10 @@ export default function VideoControlPanel({
             type="button"
             className="text-black dark:text-white hover:text-green-600 transition-all duration-300"
           >
-            <ShareIcon />
+            <div className="dark:bg-zinc-800 bg-gray-200  rounded-full px-4 py-1">
+              <span className="text-base">Share</span>
+              <ShareIcon />
+            </div>
           </button>
         </div>
       </div>
