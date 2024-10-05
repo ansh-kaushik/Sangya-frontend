@@ -158,27 +158,29 @@ export default function Playlists() {
             <ArrowBackIcon />
           </Button>
         </div>
-        <div className="flex h-full gap-4  px-2 justify-center  ">
-          <div className="h-[calc(100vh-200px)] flex flex-col justify-start items-center gap-2 pt-20  w-80   dark:bg-zinc-800 rounded-xl">
+        <div className="flex-col flex md:flex-row h-full gap-4  p-2 justify-center  ">
+          <div className="md:h-[calc(100vh-200px)] flex flex-col justify-start md:items-center gap-2   md:pt-20 p-3  md:w-80   dark:bg-zinc-800 rounded-xl">
             {videosCnt > 0 ? (
-              <img src={firstVideoImgUrl} className="h-40 aspect-video rounded-lg mb-10" />
+              <img src={firstVideoImgUrl} className=" aspect-video md:rounded-lg md:mb-10" />
             ) : (
-              <div className="h-40 aspect-video rounded-lg mb-10 bg-gray-800"> </div>
+              <div className="h-40 aspect-video md:rounded-lg mb-10 bg-gray-800"> </div>
             )}
-            <h1 className="text-2xl font-bold dark:text-white">{playlistName}</h1>
+            <h1 className="md:text-2xl text-lg font-bold dark:text-white">{playlistName}</h1>
             <h4 className="font-normal text-sm">{playlistDescription}</h4>
             <h4 className="font-sans text-sm">
               {videosCnt} video{videosCnt > 1 || videosCnt === 0 ? "s" : ""}
             </h4>
           </div>
-          <div className="flex-1 p-4  h-[calc(100vh-200px)] overflow-auto  flex flex-col gap-3  ">
+          <div className="flex-1   h-[calc(100vh-200px)] overflow-auto  flex flex-col gap-3  ">
             {videosCnt > 0 ? (
               videos.map((v, idx) => (
                 <div
                   className="flex gap-4 p-4 rounded-lg hover:cursor-pointer transition duration-150 hover:bg-gray-800 "
                   onClick={() => navigate(`/video/${v._id}`)}
                 >
-                  <div className="w-2  flex  justify-center items-center">{idx + 1}</div>
+                  <div className="w-2  hidden  md:block   justify-center items-center">
+                    {idx + 1}
+                  </div>
                   <img
                     src={v.thumbnail}
                     className="lg:w-36 aspect-video max-w-36 rounded-lg"
@@ -189,7 +191,8 @@ export default function Playlists() {
                     <h4 className="font-semibold text-lg">{v.title} </h4>
                     <h5 className="font-normal text-sm ">
                       {" "}
-                      Code with c++ . {v.views} Views . 3 days ago
+                      {console.log(v)}
+                      {v.owner?.username} . {v.views} Views . 3 days ago
                     </h5>
                   </div>
                 </div>

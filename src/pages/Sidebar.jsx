@@ -37,7 +37,7 @@ export default function Sidebar() {
           open ? "w-72" : "w-20"
         } h-screen p-5 pt-8 dark:bg-zinc-900 bg-dark-purple   transition-all duration-300 `}
       >
-        <div className="flex items-center gap-x-4">
+        <div className="flex items-center gap-x-4 pl-2 ">
           <MenuOutlined
             onClick={() => dispatch(UIactions.changeSideBarOpen(!open))}
             className={`cursor-pointer duration-700 ${open && "rotate-[360deg]"}`}
@@ -57,13 +57,13 @@ export default function Sidebar() {
               <li
                 key={idx}
                 onClick={() => dispatch(UIactions.setSelectedMenu({ selectedMenu: menu.title }))}
-                className={`text-gray-200 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${
+                className={`text-gray-200  text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${
                   menu.gap ? "mt-9" : "mt-2"
                 } ${selectedMenu === menu.title ? "bg-light-white" : "bg-transparent"}`}
               >
                 {menu.icon}
                 <span
-                  className={`${!open && "scale-0"} origin-left text-gray-200 text-sm duration-300`}
+                  className={`${!open && "scale-0  "} origin-left text-gray-200 text-sm duration-300`}
                 >
                   {menu.title}
                 </span>

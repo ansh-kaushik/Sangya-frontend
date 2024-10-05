@@ -120,9 +120,9 @@ export default function UploadVideo() {
           <Box className="prose ">
             <h4 className="py-2 dark:text-white">Thumbnail : {thumbnail && thumbnail.name}</h4>
             {!thumbnailImage ? (
-              <div className="h-60 aspect-video bg-slate-200"></div>
+              <div className=" aspect-video bg-slate-200"></div>
             ) : (
-              <div className="h-60 aspect-video bg-slate-400 flex  justify-center items-center">
+              <div className="aspect-video bg-slate-400 flex  justify-center items-center">
                 <img src={thumbnailImage} className="h-60 aspect-auto" alt="thumbnail image" />
               </div>
             )}

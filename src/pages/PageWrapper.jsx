@@ -18,7 +18,7 @@ export default function PageWrapper({ children }) {
         {/* Main content */}
         <div className="flex-1 h-full overflow-y-auto  sm:ml-20">
           <Header />
-          <div className="overflow-y-auto dark:text-white ">
+          <div className=" dark:text-white ">
             {/* main content */}
             {children}
           </div>

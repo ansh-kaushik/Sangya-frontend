@@ -90,20 +90,20 @@ export default function Header() {
 
   return (
     <div
-      className={` sticky top-0 flex items-center justify-between  space-x-4 p-4 bg-blue-600 dark:bg-zinc-900 text-white shadow-md`}
+      className={` sticky top-0 flex z-40 items-center justify-between  space-x-4 p-4 bg-blue-600 dark:bg-zinc-900 text-white shadow-md`}
     >
       {/* left div */}
       <div className="flex">
+        <span
+          onClick={() => dispatch(UIactions.changeSideBarOpen(!open))}
+          className="sm:hidden text-white"
+        >
+          <MenuOutlined className="mr-2" />
+        </span>
         <h1
           onClick={() => navigate("/")}
           className="text-xl hover:cursor-pointer font-bold dark:text-blue-700"
         >
-          <span
-            onClick={() => dispatch(UIactions.changeSideBarOpen(!open))}
-            className="sm:hidden text-white"
-          >
-            <MenuOutlined className="mr-2" />
-          </span>
           SANGYA
         </h1>
       </div>

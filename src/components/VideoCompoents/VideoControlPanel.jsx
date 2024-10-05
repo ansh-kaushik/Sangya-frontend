@@ -21,10 +21,10 @@ import {
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ShareIcon from "@mui/icons-material/Share";
-import { Add, Close, TurnedInNot } from "@mui/icons-material";
+import { Add, Close, Login, TurnedInNot } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../../services/axiosInstance";
-import { UIactions } from "../../store";
+import { UIactions, videoActions } from "../../store";
 import axios from "axios";
 
 export default function VideoControlPanel({
@@ -39,8 +39,12 @@ export default function VideoControlPanel({
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const { playlists, subscriptions } = useSelector((state) => state.UI);
   const [addMenuOpen, setAddMenuOpen] = useState(false);
+  // const { isLiked, isDisliked } = useSelector((state) => state.video);
+  const [isLiked, setLiked] = useState(false);
+  const [isDisliked, setDisked] = useState(false);
+
   const userID = useSelector((state) => state.auth.id);
-  console.log(subscriptions);
+  // console.log(subscriptions);
 
   const isSub = subscriptions.some((sub) => sub.channel?._id === channelID);
   const dispatch = useDispatch();
@@ -114,12 +118,38 @@ export default function VideoControlPanel({
     const res1 = await axiosInstance.get(`/subscriptions/c/${userID}`);
     dispatch(UIactions.setSubscriptions({ subscriptions: res1.data.data.channels }));
   };
+  const getLike_Dislike_status = async () => {
+    const [likeRes, dislikeRes] = await Promise.all([
+      axiosInstance.get(`/likes/isLiked/v/${videoId}`),
+      axiosInstance.get(`/dislikes/isDisliked/v/${videoId}`),
+    ]);
+
+    // Update local state
+    setLiked(likeRes.data?.isLiked);
+    setDisked(dislikeRes.data?.isDisliked);
+  };
+  const handleLike = async () => {
+    const res = await axiosInstance.post(`/likes/toggle/v/${videoId}`);
+    getLike_Dislike_status();
+    // console.log(res.data);
+  };
+  const handleDislike = async () => {
+    const res = await axiosInstance.post(`/dislikes/toggle/v/${videoId}`);
+    getLike_Dislike_status();
+    // console.log(res.data);
+  };
   useEffect(() => {
     if (userID) {
       getAllPlaylists();
     }
+
     // console.log(che);
   }, [userID]);
+
+  useEffect(() => {
+    getLike_Dislike_status();
+  }, []);
+
   return (
     <div className="mt-2">
       <div className="mb-2">
@@ -161,14 +191,16 @@ export default function VideoControlPanel({
         </div>
         <div className="flex sm:gap-2 gap-4  ml-2 items-center">
           <button
+            onClick={handleLike}
             type="button"
-            className="text-black dark:text-white hover:text-blue-600 transition-all duration-300"
+            className={`${isLiked ? "text-blue-600" : "text-black hover:text-blue-600"} transition-all duration-300`}
           >
             <ThumbUpAltIcon />
           </button>
           <button
+            onClick={handleDislike}
             type="button"
-            className="text-black dark:text-white hover:text-red-600 transition-all duration-300"
+            className={`${isDisliked ? "text-red-600" : "text-black hover:text-red-600"} transition-all duration-300`}
           >
             <ThumbDownAltIcon />
           </button>
@@ -186,8 +218,8 @@ export default function VideoControlPanel({
             className="text-black dark:text-white hover:text-green-600 transition-all duration-300"
           >
             <div className="dark:bg-zinc-800 bg-gray-200  rounded-full px-4 py-1">
-              <span className="text-base">Share</span>
-              <ShareIcon />
+              <ShareIcon sx={{ mr: 1 / 2 }} />
+              <span className="text-base"> Share</span>
             </div>
           </button>
         </div>

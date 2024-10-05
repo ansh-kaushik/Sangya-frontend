@@ -123,6 +123,7 @@ export default function VideoPage() {
     console.log("Safe Area Inset Bottom:", safeAreaInsetBottom);
     alert("Safe Area Inset Bottom:", safeAreaInsetBottom);
   };
+
   useEffect(() => {
     if (channelID) {
       getChannelSubs();
@@ -141,13 +142,14 @@ export default function VideoPage() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   return (
     <PageWrapper>
       {/* Container for the main content */}
       <div className="px-auto px-4 pt-4">
-        <div className="flex flex-wrap h-[calc(84vh-0px)]">
+        <div className="flex  flex-col lg:flex-row ">
           {/* Main content area */}
-          <div className="  relaitve w-full lg:w-[70%] flex lg:flex-row flex-col flex-wrap">
+          <div className="  relaitve w-full lg:min-w-[70%] flex lg:flex-row flex-col  flex-wrap">
             {/* Video player */}
             <div className="w-full  aspect-[16/9] flex">
               <div className=" aspect-[16/9]  flex">
@@ -193,13 +195,13 @@ export default function VideoPage() {
           </div>
 
           {/* Sidebar for video suggestions */}
-          <div className="bg-white-500 w-[30%] flex flex-col flex-wrap gap-0">
+          <div className="bg-white-500 flex flex-col flex-wrap  gap-4">
             {Array.from({ length: 5 }, (_, idx) => (
               <VideoCard
                 key={idx}
                 sidebar={true}
                 channelImage={videoDetails.channelImage}
-                thumbnail={videoDetails.thumbnail}
+                thumbnail={"../src/assets/thumbnail 1.jpg"}
                 title={videoDetails.title}
                 views={videoDetails.views}
                 channel={videoDetails.channel}

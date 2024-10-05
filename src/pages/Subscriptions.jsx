@@ -33,18 +33,18 @@ export default function Subscriptions() {
 
   return (
     <PageWrapper>
-      <div className="flex w-full">
+      <div className="flex flex-col md:flex-row w-full">
         {/* Sidebar with fixed width */}
-        <div className="w-80 p-4 dark:bg-zinc-800">
-          <h2 className="text-lg font-semibold">Subscriptions</h2>
-          <ul className="m-2 p-4 h-[calc(80vh-40px)] overflow-y-auto">
+        <div className="w-auto p-3 bg-gray-200 dark:bg-zinc-800">
+          <h2 className="text-xl font-semibold md:mb-4">Subscriptions</h2>
+          <ul className="  flex gap-3 md:overflow-y-auto md:flex-col md:overflow-x-clip overflow-x-auto md:max-w-56 md:min-w-48">
             {subs.map((sub, idx) => (
               <li
                 key={idx}
-                className="p-3 dark:hover:bg-gray-500 hover:bg-gray-200 rounded cursor-pointer  flex  gap-4 items-center justify-start"
+                className=" dark:hover:bg-gray-500 hover:bg-gray-200 rounded cursor-pointer  flex   gap-4 items-center justify-start"
               >
                 <img className="h-10 w-10 rounded-full" src={sub.channel.avatar} />
-                {sub.channel.username}
+                <span className="hidden sm:block">{sub.channel.username}</span>
               </li>
             ))}
           </ul>
@@ -56,8 +56,8 @@ export default function Subscriptions() {
           <h2 className="text-lg font-semibold mb-4">Latest Videos</h2>
 
           {/* Scrollable content */}
-          <div className="overflow-y-auto h-[calc(80vh-40px)]">
-            <div className="flex flex-wrap gap-2">
+          <div className=" h-[calc(80vh-40px)]">
+            <div className="flex  flex-wrap gap-2">
               {subsVideos.length > 0 &&
                 subsVideos.map((_, idx) => (
                   <VideoCard

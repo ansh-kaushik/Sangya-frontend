@@ -36,12 +36,13 @@ const VideoCard = ({
   };
   return (
     <div
-      className={`w-full aspect-video  md:w-1/4 lg:w-1/5 ${sidebar ? "flex   items-center my-0 mx-2" : "m-4"} `}
+      className={`   ${sidebar ? "flex   items-center my-0 mx-2 w-full" : "m-4 md:w-1/4 lg:w-1/5"} `}
     >
       <img
         src={thumbnail}
         alt={title}
-        className={`rounded-xl hover:cursor-pointer hover:rounded-lg  transition-all duration-300 aspect-video dark:hover:shadow-lg dark:hover:shadow-orange-300 `}
+        className={`rounded-xl hover:cursor-pointer hover:rounded-lg  ${sidebar ? "w-1/4 rounded-none" : "w-full"}  
+        transition-all duration-300 aspect-video dark:hover:shadow-lg dark:hover:shadow-orange-300 `}
         onClick={() => handleVideoPage({ title, url, channelImage, channel, views, description })}
         // style={{ objectFit: "cover" }}
       />
@@ -51,7 +52,11 @@ const VideoCard = ({
           {/* div for channel logo */}
           {!sidebar && (
             <div className="">
-              <img src={channelImage} className="h-8  rounded-full" alt="channel image" />
+              <img
+                src={channelImage}
+                className="h-8 md:h-10  rounded-full aspect-square"
+                alt="channel image"
+              />
             </div>
           )}
         </div>

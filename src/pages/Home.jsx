@@ -16,7 +16,7 @@ export default function Home() {
   const getAllVideosDetails = async () => {
     const res = await axios.get(URL);
     let videos = res.data.videos;
-    console.log(videos);
+    // console.log(videos);
     videos = videos.map((video) => ({
       id: video._id,
       thumbnail: video.thumbnail,
@@ -29,6 +29,8 @@ export default function Home() {
       channelImage: video.owner?.avatar || "./src/assets/channel_icon.png",
       uploadTime: video.createdAt,
     }));
+    console.log(videos);
+
     // console.log(Array.isArray(videos));
 
     dispatch(UIactions.setHomePageVideos({ homePageVideos: videos }));

@@ -24,6 +24,8 @@ const initialVideoSlice = {
   channelID: undefined,
   views: undefined,
   description: undefined,
+  isLiked: false,
+  isDisliked: false,
 };
 const UISlice = createSlice({
   name: "UISlice",
@@ -55,7 +57,17 @@ const videoSlice = createSlice({
   initialState: initialVideoSlice,
   reducers: {
     setVideoDetails(state, action) {
-      const { title, url, channelImage, channel, views, description, channelID } = action.payload;
+      const {
+        title,
+        url,
+        channelImage,
+        channel,
+        views,
+        description,
+        channelID,
+        isLiked,
+        isDisliked,
+      } = action.payload;
       return {
         ...state,
         channelID,
@@ -65,8 +77,16 @@ const videoSlice = createSlice({
         channel,
         views,
         description,
+        isDisliked,
+        isLiked,
       };
     },
+  },
+  toggleLike(state) {
+    state.isLiked = !state.isLiked;
+  },
+  toggleDislike(state) {
+    state.isDisliked = !state.isDisliked;
   },
 });
 const authSlice = createSlice({

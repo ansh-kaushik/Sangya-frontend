@@ -50,40 +50,40 @@ export default function Profile() {
             {name}
           </Typography>
         </Box>
-        <Box className="mt-4">
+        <Box className="mt-4 w-full">
           <Tabs defaultValue={1}>
-            <TabsList className="w-72 ">
+            <TabsList className="" sx={{ minWidth: "auto", maxWidth: "500px" }}>
               <Tab value={1}>General</Tab>
               <Tab value={2}>Security</Tab>
               <Tab value={3}>Notfications</Tab>
             </TabsList>
             <TabPanel value={1}>
-              <Box type="form" className="flex flex-wrap gap-4 mt-10 ">
-                <TextField className="w-1/4" defaultValue={firstName} label="First Name" />
-                <TextField className="w-1/4" defaultValue={lastName} label="Last Name" />
-                <TextField className="w-1/3" defaultValue={email} label="Email" />
+              <Box type="form" className="flex flex-col  sm:w-[400px] flex-wrap gap-4 mt-10 ">
+                <TextField className="" defaultValue={firstName} label="First Name" />
+                <TextField className="" defaultValue={lastName} label="Last Name" />
+                <TextField className="" defaultValue={email} label="Email" />
                 <Button type="submit" onClick={handleUpdate} variant="contained" color="secondary">
                   Save Changes
                 </Button>
               </Box>
             </TabPanel>
             <TabPanel value={2}>
-              <Box type="form" className="flex  flex-col flex-wrap gap-4 mt-10 ">
+              <Box type="form" className="flex   flex-col sm:w-[400px] flex-wrap gap-4 mt-10 ">
                 <TextField
-                  className="w-1/4"
+                  className=""
                   type="password"
                   label="New Password"
                   placeholder="New Password"
                 />
                 <TextField
-                  className="w-1/4"
+                  className=""
                   type="password"
                   label="Repeat New Password"
                   placeholder="Repeat New Password"
                 />
 
                 <Button
-                  className="w-1/4"
+                  className=""
                   type="submit"
                   onClick={handleUpdatePassword}
                   variant="contained"

@@ -34,16 +34,19 @@ export default function UserVideos() {
     console.log(videos);
 
     videos = videos.map((video) => ({
+      id: video._id,
       thumbnail: video.thumbnail,
       title: video.title,
       views: video.views,
       url: video.videoFile,
       description: video.description,
       channel: video.owner?.username || "Sangya",
+      channelID: video.owner?._id || "undefined",
       channelImage: video.owner?.avatar || "./src/assets/channel_icon.png",
       uploadTime: video.createdAt,
     }));
     setUserVideos(videos);
+    console.log(videos);
   };
 
   useEffect(() => {
@@ -81,6 +84,8 @@ export default function UserVideos() {
             ) : (
               userVideos.map((videoDetails, idx) => (
                 <VideoCard
+                  channelID={videoDetails.channelID}
+                  id={videoDetails.id}
                   key={idx}
                   description={videoDetails.description}
                   channelImage={videoDetails.channelImage}
