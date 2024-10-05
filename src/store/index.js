@@ -1,12 +1,15 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const initialUIState = {
-  sideBarOpen: true,
+  sideBarOpen: false,
   selectedMenu: "Home",
   darkMode: localStorage.getItem("darkMode") === "true",
   homePageVideos: [],
+  likedVideos: [],
   playlists: [],
+  displaySearch: "hidden",
   subscriptions: [],
+  searchResultVideos: [],
 };
 
 const initialAuthState = {
@@ -23,6 +26,7 @@ const initialVideoSlice = {
   channel: undefined,
   channelID: undefined,
   views: undefined,
+  uploadedAt: Date.now(),
   description: undefined,
   isLiked: false,
   isDisliked: false,
@@ -40,15 +44,25 @@ const UISlice = createSlice({
     setHomePageVideos(state, action) {
       state.homePageVideos = action.payload.homePageVideos;
     },
+    setLikedVideos(state, action) {
+      state.likedVideos = action.payload.likedVideos;
+    },
     toggleDarkMode(state) {
       state.darkMode = !state.darkMode;
       localStorage.setItem("darkMode", state.darkMode);
     },
+
     setPlaylists(state, action) {
       state.playlists = action.payload.playlists;
     },
     setSubscriptions(state, action) {
       state.subscriptions = action.payload.subscriptions;
+    },
+    setSearchResultVideos(state, action) {
+      state.searchResultVideos = action.payload.searchResultVideos;
+    },
+    setDisplaySearch(state, action) {
+      state.displaySearch = action.payload.displaySearch;
     },
   },
 });
@@ -67,6 +81,7 @@ const videoSlice = createSlice({
         channelID,
         isLiked,
         isDisliked,
+        uploadedAt,
       } = action.payload;
       return {
         ...state,
@@ -79,6 +94,7 @@ const videoSlice = createSlice({
         description,
         isDisliked,
         isLiked,
+        uploadedAt,
       };
     },
   },

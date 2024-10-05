@@ -30,11 +30,11 @@ export default function Sidebar() {
   return (
     <div
       id="sidebar"
-      className={`sm:flex absolute sidebar   ${!open ? "hidden  " : ""}  left-0 z-50`}
+      className={`sm:flex absolute sidebar   ${!open ? "hidden  " : ""}  left-0 z-50 `}
     >
       <div
         className={`${
-          open ? "w-72" : "w-20"
+          open ? "w-56 sm:w-72" : "w-20"
         } h-screen p-5 pt-8 dark:bg-zinc-900 bg-dark-purple   transition-all duration-300 `}
       >
         <div className="flex items-center gap-x-4 pl-2 ">
@@ -44,9 +44,8 @@ export default function Sidebar() {
             sx={{ color: "white" }}
           />
           <h1
-            className={`text-white dark:text-blue-700 origin-left font-medium text-xl duration-300 ${
-              !open && "scale-0"
-            }`}
+            className={`text-white dark:text-blue-700 origin-left font-medium text-xl duration-300
+              text-shadow: 2px 4px 4px rgb(46 91 173 / 0.6); ${!open && "scale-0"}`}
           >
             SANGYA
           </h1>

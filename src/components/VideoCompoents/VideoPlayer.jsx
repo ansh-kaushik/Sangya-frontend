@@ -33,6 +33,7 @@ export default function VideoPlayer({ url, title }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const conatinerRef = useRef(null);
   const [isOverlayVisible, setIsOverlayVisible] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
   const timeoutRef = useRef(null); // To store the timeout ID
   const showOverlay = () => {
     setIsOverlayVisible(true);
@@ -119,6 +120,7 @@ export default function VideoPlayer({ url, title }) {
   useEffect(() => {
     // Function to handle keydown events
     const handleKeyDown = (event) => {
+      if (!isFocused) return;
       if (event.key === "Escape") {
         // Check if the key pressed is 'Esc'
         setVideoState((prev) => ({ ...prev, fullScreen: false })); // Toggle the state
@@ -186,8 +188,31 @@ export default function VideoPlayer({ url, title }) {
   //   console.log(isOverlayVisible);
   // console.log(url.curQuality);
 
+  useEffect(() => {
+    // Function to handle clicks outside the component
+    const handleClickOutside = (event) => {
+      // Check if the click is outside the player component
+      if (playerRef.current && !playerRef.current.contains(event.target)) {
+        setIsFocused(false); // Set focus to false
+      } else {
+        setIsFocused(true);
+      }
+    };
+
+    // Add event listener for document clicks
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Clean up event listener on component unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div ref={playerRef1} className=" flex flex-col w-full h-full relative">
+    <div
+      ref={playerRef1}
+      className=" flex flex-col w-full  h-full relative shadow-slate-200 shadow-lg"
+    >
       <div className="flex-1">
         <div className="player__wrapper h-full flex react-player ">
           <ReactPlayer
@@ -214,7 +239,7 @@ export default function VideoPlayer({ url, title }) {
           style={{
             backgroundImage: "linear-gradient(to top, rgba(50, 50, 50, 1) , rgba(0, 0, 0, 0) 12%)",
           }}
-          className="overlay-div flex flex-col justify-between w-full h-full absolute inset-0 text-white shadow-lg transition-transform duration-700"
+          className="overlay-div  flex flex-col justify-between  w-full h-full absolute inset-0 text-white shadow-lg transition-transform duration-700"
         >
           <div className="overlay-header w-full">
             {videoState.fullScreen && (

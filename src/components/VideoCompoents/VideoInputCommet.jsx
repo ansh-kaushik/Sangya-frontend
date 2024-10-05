@@ -2,14 +2,24 @@ import { AccountCircleOutlined } from "@mui/icons-material";
 import { Avatar, Box, Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import axiosInstance from "../../services/axiosInstance";
+import { useParams } from "react-router";
 
-export default function VideoInputCommet() {
+export default function VideoInputCommet({ videoId }) {
   const [flag, setFlag] = useState(false);
   const darkMode = useSelector((state) => state.UI.darkMode);
+  const { avatar } = useSelector((state) => state.auth);
   const [comment, setComment] = useState("");
-  const handleSubmitComment = (e) => {
+  // const { id } = useParams();
+  const handleSubmitComment = async (e) => {
     e.preventDefault();
+    const res = await axiosInstance.post(`/comments/${videoId}`, { content: comment });
+    console.log(res);
+    if (res.status == 200) {
+      setComment("");
+    }
   };
+
   return (
     <>
       <Box component="div" className="mb-4 sm:border-none   border-t-2-2 border border-t-black ">
@@ -17,9 +27,7 @@ export default function VideoInputCommet() {
           component="form"
           className="w-full  flex p-2 gap-3 items-center justify-center dark:text-white"
         >
-          <Avatar>
-            <AccountCircleOutlined />
-          </Avatar>
+          <Avatar>{avatar ? <img src={avatar} /> : <AccountCircleOutlined />}</Avatar>
           <TextField
             placeholder="Add a comment.."
             value={comment}
@@ -44,9 +52,9 @@ export default function VideoInputCommet() {
               Cancel
             </Button>
             <Button
-              type="submit"
+              type="button"
               disabled={comment == "" ? true : false}
-              onSubmit={handleSubmitComment}
+              onClick={handleSubmitComment}
               variant="contained"
               sx={{
                 "&.Mui-disabled": {

@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PageWrapper from "./PageWrapper";
 import VideoCard from "../components/VideoCompoents/VideoCard";
 import { History } from "@mui/icons-material";
+import axiosInstance from "../services/axiosInstance";
+import { useDispatch, useSelector } from "react-redux";
+import { UIactions } from "../store";
 
 const videoDetails = {
   thumbnail: "./src/assets/thumbnail 1.jpg",
@@ -13,6 +16,34 @@ const videoDetails = {
 };
 
 export default function LikedVideos() {
+  const dispatch = useDispatch();
+  const { likedVideos } = useSelector((state) => state.UI);
+
+  const getLikedVideos = async () => {
+    const res = await axiosInstance.get("/likes/videos");
+    let videos = res.data.data;
+
+    videos = videos.map((v) => v.video);
+    console.log(videos);
+    videos = videos.map((video) => ({
+      id: video._id,
+      thumbnail: video.thumbnail,
+      title: video.title,
+      views: video.views,
+      url: video.videoFile,
+      description: video.description,
+      channel: video.owner?.username || "Sangya",
+      channelID: video.owner?._id || "undefined",
+      channelImage: video.owner?.avatar || "./src/assets/channel_icon.png",
+      uploadTime: video.createdAt,
+    }));
+    dispatch(UIactions.setLikedVideos({ likedVideos: videos }));
+  };
+  // console.log(likedVideos);
+
+  useEffect(() => {
+    if (likedVideos.length === 0) getLikedVideos();
+  }, []);
   return (
     <PageWrapper>
       <div className="flex flex-col h-full">
@@ -21,17 +52,22 @@ export default function LikedVideos() {
 
         {/* Scrollable content area */}
         <div className="flex-1 overflow-y-auto p-2 flex flex-wrap gap-1">
-          {Array.from({ length: 10 }, (_, idx) => (
-            <VideoCard
-              key={idx}
-              channelImage={videoDetails.channelImage}
-              thumbnail={videoDetails.thumbnail}
-              title={videoDetails.title}
-              views={videoDetails.views}
-              channel={videoDetails.channel}
-              uploadTime={videoDetails.uploadTime}
-            />
-          ))}
+          {likedVideos &&
+            likedVideos.map((videoDetails, idx) => (
+              <VideoCard
+                channelID={videoDetails.channelID}
+                id={videoDetails.id}
+                key={idx}
+                description={videoDetails.description}
+                channelImage={videoDetails.channelImage}
+                thumbnail={videoDetails.thumbnail}
+                url={videoDetails.url}
+                title={videoDetails.title}
+                channel={videoDetails.channel}
+                views={videoDetails.views}
+                uploadTime={videoDetails.uploadTime}
+              />
+            ))}
         </div>
       </div>
     </PageWrapper>

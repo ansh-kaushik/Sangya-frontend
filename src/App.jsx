@@ -22,6 +22,7 @@ import UploadVideo from "./pages/UploadVideo";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions, UIactions } from "./store";
 import axiosInstance from "./services/axiosInstance";
+import SearchResults from "./pages/SearchResults";
 
 const getNewKills = async () => {
   // const api_key = "HDEV-8547f177-1188-4cf9-8086-2a8d734ec747";
@@ -74,6 +75,9 @@ function App() {
   };
 
   useEffect(() => {
+    syncAuthSlice();
+  }, []);
+  useEffect(() => {
     if (id) {
       syncUISlice();
     }
@@ -94,6 +98,7 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/video/:id" element={<VideoPage />} />
         <Route path="/uploadVideo" element={<UploadVideo />} />
+        <Route path="/search" element={<SearchResults />} />
       </Routes>
     </>
   );

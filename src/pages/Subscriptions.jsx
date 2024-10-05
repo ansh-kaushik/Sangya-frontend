@@ -22,8 +22,22 @@ export default function Subscriptions() {
   const getSubsVideos = async () => {
     const res = await axiosInstance.get("/videos/subsVideos");
     // console.log(res.data);
+    let videos = res.data.videos;
+    videos = videos.map((video) => ({
+      id: video._id,
+      thumbnail: video.thumbnail,
+      title: video.title,
+      views: video.views,
+      url: video.videoFile,
+      description: video.description,
+      channel: video.owner?.username || "Sangya",
+      channelID: video.owner?._id || "undefined",
+      channelImage: video.owner?.avatar || "./src/assets/channel_icon.png",
+      uploadTime: video.createdAt,
+    }));
+    setSubsVideos(videos);
 
-    setSubsVideos(res.data.videos);
+    console.log(videos);
   };
 
   useEffect(() => {
@@ -59,15 +73,19 @@ export default function Subscriptions() {
           <div className=" h-[calc(80vh-40px)]">
             <div className="flex  flex-wrap gap-2">
               {subsVideos.length > 0 &&
-                subsVideos.map((_, idx) => (
+                subsVideos.map((videoDetails, idx) => (
                   <VideoCard
+                    channelID={videoDetails.channelID}
+                    id={videoDetails.id}
                     key={idx}
-                    channelImage={_.owner.avatar}
-                    thumbnail={_.thumbnail}
-                    title={_.title}
-                    views={_.views}
-                    channel={_.owner.username}
-                    uploadTime={_.createdAt}
+                    description={videoDetails.description}
+                    channelImage={videoDetails.channelImage}
+                    thumbnail={videoDetails.thumbnail}
+                    url={videoDetails.url}
+                    title={videoDetails.title}
+                    channel={videoDetails.channel}
+                    views={videoDetails.views}
+                    uploadTime={videoDetails.uploadTime}
                   />
                 ))}
             </div>
