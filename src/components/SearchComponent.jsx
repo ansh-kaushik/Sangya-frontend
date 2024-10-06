@@ -14,7 +14,7 @@ const initial_suggestionsList = [
 const SearchComponent = ({}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const { displaySearch } = useSelector((state) => state.UI);
-  console.log(displaySearch);
+  // console.log(displaySearch);
   const [suggestionsList, setSuggestionList] = useState(initial_suggestionsList);
 
   const [seachHistory, setSearhHistory] = useState([]);
@@ -76,7 +76,7 @@ const SearchComponent = ({}) => {
     titles = titles.map((t) => ({ title: t, wasSearched: false }));
 
     if (searchQuery !== "") {
-      console.log("sdsd");
+      // console.log("sdsd");
 
       const matchingTitles = seachHistory.filter((s) => s.title.startsWith(searchQuery));
       setSearchHistorySuggestions(matchingTitles);
@@ -85,7 +85,7 @@ const SearchComponent = ({}) => {
     }
     setSuggestionList((prev) => [...titles]);
   };
-  console.log(seachHistory);
+  // console.log(seachHistory);
   useEffect(() => {
     handleGetSuggestions();
   }, [searchQuery]);
@@ -180,8 +180,11 @@ const SearchComponent = ({}) => {
             </li>
           ))}
           {/* normal query suggestions */}
-          {suggestionsList.map((sug) => (
-            <li className="flex w-full justify-between hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-white p-2 my-2">
+          {suggestionsList.map((sug, idx) => (
+            <li
+              key={idx}
+              className="flex w-full justify-between hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-white p-2 my-2"
+            >
               <div
                 onClick={(e) => {
                   setSearchQuery(sug.title);

@@ -175,7 +175,7 @@ export default function Header() {
     titles = titles.map((t) => ({ title: t, wasSearched: false }));
 
     if (searchQuery !== "") {
-      console.log("sdsd");
+      // console.log("sdsd");
 
       const matchingTitles = seachHistory.filter((s) => s.title.startsWith(searchQuery));
       setSearchHistorySuggestions(matchingTitles);
@@ -184,7 +184,7 @@ export default function Header() {
     }
     setSuggestionList((prev) => [...titles]);
   };
-  console.log(seachHistory);
+  // console.log(seachHistory);
   useEffect(() => {
     handleGetSuggestions();
   }, [searchQuery]);

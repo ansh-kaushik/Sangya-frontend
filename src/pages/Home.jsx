@@ -29,7 +29,7 @@ export default function Home() {
       channelImage: video.owner?.avatar || "./src/assets/channel_icon.png",
       uploadTime: video.createdAt,
     }));
-    console.log(videos);
+    // console.log(videos);
 
     // console.log(Array.isArray(videos));
 

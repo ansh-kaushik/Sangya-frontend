@@ -22,7 +22,7 @@ import { toast, ToastContainer } from "react-toastify";
 export default function Login() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   let auth = useSelector((state) => state.auth.auth);
-  if (!auth) auth = localStorage.getItem("auth");
+  // if (!auth) auth = localStorage.getItem("auth");
   // const selectedMenu = useSelector((state) => state.UI.selectedMenu);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,8 +31,12 @@ export default function Login() {
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email");
     const password = formData.get("password");
-    localStorage.setItem("email", email);
-    // localStorage.setItem("password", password);
+    const rememberUser = formData.get("remMe");
+    console.log(rememberUser);
+
+    if (rememberUser) {
+      localStorage.setItem("stay-logged", true);
+    }
 
     const res = await axios.post(
       `${BASE_URL}/users/login`,
@@ -50,10 +54,10 @@ export default function Login() {
           id: data.data.user._id,
         })
       );
-      localStorage.setItem("avatar", data.data.user.avatar);
-      localStorage.setItem("name", data.data.user.fullName);
-      localStorage.setItem("email", email);
-      localStorage.setItem("auth", true);
+      // localStorage.setItem("avatar", data.data.user.avatar);
+      // localStorage.setItem("name", data.data.user.fullName);
+      // localStorage.setItem("email", email);
+      // localStorage.setItem("auth", true);
       dispatch(UIactions.setSelectedMenu({ selectedMenu: "Home" }));
       toast.success("Logged in successfully");
       navigate("/");
@@ -89,7 +93,7 @@ export default function Login() {
               sx={{ mb: 2 }}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value={true} name="remMe" color="primary" />}
               label="Remember me"
             />
             <Button type="submit" variant="contained" fullWidth sx={{ mt: 1 }}>

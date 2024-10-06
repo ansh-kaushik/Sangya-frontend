@@ -3,13 +3,14 @@ import { Avatar, Box, Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axiosInstance from "../../services/axiosInstance";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 export default function VideoInputCommet({ videoId }) {
   const [flag, setFlag] = useState(false);
   const darkMode = useSelector((state) => state.UI.darkMode);
-  const { avatar } = useSelector((state) => state.auth);
+  const { avatar, auth } = useSelector((state) => state.auth);
   const [comment, setComment] = useState("");
+  const navigate = useNavigate();
   // const { id } = useParams();
   const handleSubmitComment = async (e) => {
     e.preventDefault();
@@ -33,7 +34,12 @@ export default function VideoInputCommet({ videoId }) {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             name="user_comment"
-            onClick={() => setFlag(true)}
+            onClick={() => {
+              if (!auth) {
+                navigate("/login");
+              }
+              setFlag(true);
+            }}
             className="w-full dark:text-white "
             id="standard-basic"
             variant="standard"

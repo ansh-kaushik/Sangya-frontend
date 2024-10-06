@@ -99,6 +99,7 @@ export default function VideoPage() {
     (state) => state.video
   );
   const commentRef = useRef(null);
+
   // console.log(timeAgo(uploadedAt));
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -126,7 +127,7 @@ export default function VideoPage() {
     // console.log(res.data.data.owner.avatar);
     if (res.status === 200) {
       const data = res.data.data;
-      console.log(data);
+      // console.log(data);
 
       dispatch(
         videoActions.setVideoDetails({
@@ -143,12 +144,12 @@ export default function VideoPage() {
     const data = res.data;
   };
 
-  const handleClick = () => {
-    const safeAreaInsetBottom = getComputedStyle(commentRef.current).paddingBottom;
+  // const handleClick = () => {
+  //   const safeAreaInsetBottom = getComputedStyle(commentRef.current).paddingBottom;
 
-    console.log("Safe Area Inset Bottom:", safeAreaInsetBottom);
-    alert("Safe Area Inset Bottom:", safeAreaInsetBottom);
-  };
+  //   // console.log("Safe Area Inset Bottom:", safeAreaInsetBottom);
+  //   // alert("Safe Area Inset Bottom:", safeAreaInsetBottom);
+  // };
 
   useEffect(() => {
     if (channelID) {

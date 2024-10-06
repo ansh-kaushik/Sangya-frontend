@@ -17,6 +17,7 @@ const videoDetails = {
 export default function Subscriptions() {
   const subs = useSelector((state) => state.UI.subscriptions);
   const [subsVideos, setSubsVideos] = useState([]);
+  const { auth } = useSelector((state) => state.auth);
   // console.log(subs);
 
   const getSubsVideos = async () => {
@@ -47,51 +48,62 @@ export default function Subscriptions() {
 
   return (
     <PageWrapper>
-      <div className="flex flex-col md:flex-row w-full">
-        {/* Sidebar with fixed width */}
-        <div className="w-auto p-3 bg-gray-200 dark:bg-zinc-800">
-          <h2 className="text-xl font-semibold md:mb-4">Subscriptions</h2>
-          <ul className="  flex gap-3 md:overflow-y-auto md:flex-col md:overflow-x-clip overflow-x-auto md:max-w-56 md:min-w-48">
-            {subs.map((sub, idx) => (
-              <li
-                key={idx}
-                className=" dark:hover:bg-gray-500 hover:bg-gray-200 rounded cursor-pointer  flex   gap-4 items-center justify-start"
-              >
-                <img className="h-10 w-10 rounded-full" src={sub.channel.avatar} />
-                <span className="hidden sm:block">{sub.channel.username}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {auth ? (
+        <div className="flex flex-col md:flex-row w-full">
+          {/* Sidebar with fixed width */}
+          <div className="w-auto p-3 bg-gray-200 dark:bg-zinc-800">
+            <h2 className="text-xl font-semibold md:mb-4">Subscriptions</h2>
+            <ul className="  flex gap-3 md:overflow-y-auto md:flex-col md:overflow-x-clip overflow-x-auto md:max-w-56 md:min-w-48">
+              {subs.map((sub, idx) => (
+                <li
+                  key={idx}
+                  className=" dark:hover:bg-gray-500 hover:bg-gray-200 rounded cursor-pointer  flex   gap-4 items-center justify-start"
+                >
+                  <img className="h-10 w-10 rounded-full" src={sub.channel.avatar} />
+                  <span className="hidden sm:block">{sub.channel.username}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        {/* Main content area */}
-        <div className="flex-1 p-4 relative">
-          {/* Fixed heading */}
-          <h2 className="text-lg font-semibold mb-4">Latest Videos</h2>
+          {/* Main content area */}
+          <div className="flex-1 p-4 relative">
+            {/* Fixed heading */}
+            <h2 className="text-lg font-semibold mb-4">Latest Videos</h2>
 
-          {/* Scrollable content */}
-          <div className=" h-[calc(80vh-40px)]">
-            <div className="flex  flex-wrap gap-2">
-              {subsVideos.length > 0 &&
-                subsVideos.map((videoDetails, idx) => (
-                  <VideoCard
-                    channelID={videoDetails.channelID}
-                    id={videoDetails.id}
-                    key={idx}
-                    description={videoDetails.description}
-                    channelImage={videoDetails.channelImage}
-                    thumbnail={videoDetails.thumbnail}
-                    url={videoDetails.url}
-                    title={videoDetails.title}
-                    channel={videoDetails.channel}
-                    views={videoDetails.views}
-                    uploadTime={videoDetails.uploadTime}
-                  />
-                ))}
+            {/* Scrollable content */}
+            <div className=" h-[calc(80vh-40px)]">
+              <div className="flex  flex-wrap gap-2">
+                {subsVideos.length > 0 &&
+                  subsVideos.map((videoDetails, idx) => (
+                    <VideoCard
+                      channelID={videoDetails.channelID}
+                      id={videoDetails.id}
+                      key={idx}
+                      description={videoDetails.description}
+                      channelImage={videoDetails.channelImage}
+                      thumbnail={videoDetails.thumbnail}
+                      url={videoDetails.url}
+                      title={videoDetails.title}
+                      channel={videoDetails.channel}
+                      views={videoDetails.views}
+                      uploadTime={videoDetails.uploadTime}
+                    />
+                  ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div
+          className={`flex flex-col text-center items-center justify-center
+         h-64 bg-gray-100 dark:bg-zinc-900 rounded-lg shadow-md p-6`}
+        >
+          <h2 className="text-2xl font-bold text-gray-700 mb-4 dark:text-white">
+            Please login to view your subscriptions
+          </h2>
+        </div>
+      )}
     </PageWrapper>
   );
 }

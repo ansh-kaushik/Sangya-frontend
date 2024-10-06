@@ -25,12 +25,14 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    if (!auth) {
-      navigate("/login");
-    }
+    const timer = setTimeout(() => {
+      if (!auth) {
+        navigate("/login");
+      }
+    }, 3000);
+    return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth, navigate]);
-
+  }, [auth]);
   return (
     <PageWrapper>
       <Container className="shadow-lg h-full p-4 rounded-lg flex flex-col w-full gap-5 max-w-3xl dark:bg-zinc-900 dark:text-white mx-auto bg-white mt-4">

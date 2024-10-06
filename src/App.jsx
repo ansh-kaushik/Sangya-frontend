@@ -67,6 +67,7 @@ function App() {
       console.error("Error syncing auth slice:", error);
     }
   };
+  const stay_logged = JSON.parse(localStorage.getItem("stay-logged"));
 
   const syncUISlice = async () => {
     const res = await axiosInstance.get(`/subscriptions/c/${id}`);
@@ -75,10 +76,12 @@ function App() {
   };
 
   useEffect(() => {
-    syncAuthSlice();
+    if (stay_logged) {
+      syncAuthSlice();
+    }
   }, []);
   useEffect(() => {
-    if (id) {
+    if (id && stay_logged) {
       syncUISlice();
     }
   }, [id]);

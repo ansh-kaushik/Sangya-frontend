@@ -1,15 +1,13 @@
 {
   "hosting": {
     "public": "dist",
-    "site": "val-tracker",
-
+    "site": "sangya",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
       }
-    ],
-    "predeploy": ["npm run build"]
+    ]
   }
 }

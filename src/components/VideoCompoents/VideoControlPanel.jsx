@@ -48,6 +48,7 @@ import {
   WhatsappShareButton,
   XIcon,
 } from "react-share";
+import { useNavigate } from "react-router-dom";
 
 export default function VideoControlPanel({
   channelName,
@@ -62,10 +63,12 @@ export default function VideoControlPanel({
   const [openShareDialog, setOpenShareDialog] = useState(false);
   const { playlists, subscriptions } = useSelector((state) => state.UI);
   const [addMenuOpen, setAddMenuOpen] = useState(false);
+  const { auth } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   // const { isLiked, isDisliked } = useSelector((state) => state.video);
   const [isLiked, setLiked] = useState(false);
   const [isDisliked, setDisked] = useState(false);
-  const shareURL = "192.168.0.102:5173/video/" + videoId;
+  const shareURL = "sangya.web.app/video/" + videoId;
   const userID = useSelector((state) => state.auth.id);
   // console.log(subscriptions);
   const handleOpenShareDialog = () => {
@@ -80,6 +83,9 @@ export default function VideoControlPanel({
   checkedPlaylists = checkedPlaylists.map((p) => p._id);
   // Function to open the dialog
   const handleClickOpen = () => {
+    if (!auth) {
+      navigate("/login");
+    }
     setOpenDialog(true);
   };
   function SlideTransition(props) {
@@ -138,6 +144,9 @@ export default function VideoControlPanel({
   };
 
   const handleSubscribe = async () => {
+    if (!auth) {
+      navigate("/login");
+    }
     const res = await axiosInstance.post(`/subscriptions/${channelID}`);
     console.log(res.data);
     const res1 = await axiosInstance.get(`/subscriptions/c/${userID}`);
@@ -156,11 +165,17 @@ export default function VideoControlPanel({
     // Update local state
   };
   const handleLike = async () => {
+    if (!auth) {
+      navigate("/login");
+    }
     const res = await axiosInstance.post(`/likes/toggle/v/${videoId}`);
     getLike_Dislike_status(1);
     // console.log(res.data);
   };
   const handleDislike = async () => {
+    if (!auth) {
+      navigate("/login");
+    }
     const res = await axiosInstance.post(`/dislikes/toggle/v/${videoId}`);
     getLike_Dislike_status(2);
     // console.log(res.data);
@@ -174,7 +189,7 @@ export default function VideoControlPanel({
   }, [userID]);
 
   useEffect(() => {
-    if (!userID) getLike_Dislike_status(0);
+    if (userID) getLike_Dislike_status(0);
   }, []);
 
   return (

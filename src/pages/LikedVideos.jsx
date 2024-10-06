@@ -18,7 +18,7 @@ const videoDetails = {
 export default function LikedVideos() {
   const dispatch = useDispatch();
   const { likedVideos } = useSelector((state) => state.UI);
-
+  const { auth } = useSelector((state) => state.auth);
   const getLikedVideos = async () => {
     const res = await axiosInstance.get("/likes/videos");
     let videos = res.data.data;
@@ -46,30 +46,41 @@ export default function LikedVideos() {
   }, []);
   return (
     <PageWrapper>
-      <div className="flex flex-col h-full">
-        {/* Non-scrollable heading */}
-        <h2 className="text-lg font-bold  p-4">Liked Videos</h2>
+      {auth ? (
+        <div className="flex flex-col h-full">
+          {/* Non-scrollable heading */}
+          <h2 className="text-lg font-bold  p-4">Liked Videos</h2>
 
-        {/* Scrollable content area */}
-        <div className="flex-1 overflow-y-auto p-2 flex flex-wrap gap-1">
-          {likedVideos &&
-            likedVideos.map((videoDetails, idx) => (
-              <VideoCard
-                channelID={videoDetails.channelID}
-                id={videoDetails.id}
-                key={idx}
-                description={videoDetails.description}
-                channelImage={videoDetails.channelImage}
-                thumbnail={videoDetails.thumbnail}
-                url={videoDetails.url}
-                title={videoDetails.title}
-                channel={videoDetails.channel}
-                views={videoDetails.views}
-                uploadTime={videoDetails.uploadTime}
-              />
-            ))}
+          {/* Scrollable content area */}
+          <div className="flex-1 overflow-y-auto p-2 flex flex-wrap gap-1">
+            {likedVideos &&
+              likedVideos.map((videoDetails, idx) => (
+                <VideoCard
+                  channelID={videoDetails.channelID}
+                  id={videoDetails.id}
+                  key={idx}
+                  description={videoDetails.description}
+                  channelImage={videoDetails.channelImage}
+                  thumbnail={videoDetails.thumbnail}
+                  url={videoDetails.url}
+                  title={videoDetails.title}
+                  channel={videoDetails.channel}
+                  views={videoDetails.views}
+                  uploadTime={videoDetails.uploadTime}
+                />
+              ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div
+          className={`flex flex-col text-center items-center justify-center h-64
+         bg-gray-100 dark:bg-zinc-900 rounded-lg shadow-md p-6`}
+        >
+          <h2 className="text-2xl font-bold text-gray-700 mb-4 dark:text-white">
+            Please login to view your liked videos
+          </h2>
+        </div>
+      )}
     </PageWrapper>
   );
 }
