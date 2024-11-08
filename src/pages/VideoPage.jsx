@@ -94,6 +94,7 @@ const MobileCommentSection = ({ commentSectionOpen, setCommentSectionOpen, comme
     </>
   );
 };
+
 export default function VideoPage() {
   const { title, url, channel, channelImage, description, channelID, uploadedAt } = useSelector(
     (state) => state.video
@@ -103,12 +104,24 @@ export default function VideoPage() {
   // console.log(timeAgo(uploadedAt));
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
   const dispatch = useDispatch();
   const [subsCnt, setSubsCnt] = useState(0);
   const [videoComments, setVideoComments] = useState([]);
   const [commentSectionOpen, setCommentSectionOpen] = useState(false);
   const { id } = useParams();
+  //  **************************************************
+
+  // *******************************************
+
+  const addToWatchHistory = async () => {
+    try {
+      const res = await axiosInstance.post(`/watchHistory/add`, {
+        videoId: id,
+      });
+    } catch (er) {
+      console.log(er);
+    }
+  };
   const getChannelSubs = async () => {
     const res = await axiosInstance.get(`/subscriptions/s/${channelID}`);
     const subs = res.data.data.subscribers;
@@ -154,6 +167,7 @@ export default function VideoPage() {
   useEffect(() => {
     if (channelID) {
       getChannelSubs();
+      addToWatchHistory();
     }
   }, [channelID]);
   useEffect(() => {

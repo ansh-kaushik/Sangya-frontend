@@ -37,8 +37,6 @@ export default function Subscriptions() {
       uploadTime: video.createdAt,
     }));
     setSubsVideos(videos);
-
-    console.log(videos);
   };
 
   useEffect(() => {

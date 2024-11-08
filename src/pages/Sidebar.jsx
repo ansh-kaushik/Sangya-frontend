@@ -24,7 +24,7 @@ export default function Sidebar() {
     { title: "History", icon: <HistoryIcon />, link: "watchHistory" },
     { title: "Playlists", icon: <PlaylistPlayIcon />, link: "myPlaylists" },
     { title: "Liked Videos", icon: <ThumbUpIcon />, link: "likedVideos" },
-    { title: "Settings", icon: <SettingsIcon />, gap: true, link: "appSettings" },
+    // { title: "Settings", icon: <SettingsIcon />, gap: true, link: "appSettings" },
   ];
 
   return (
@@ -55,7 +55,10 @@ export default function Sidebar() {
             <Link key={idx} to={`/${menu.link}`}>
               <li
                 key={idx}
-                onClick={() => dispatch(UIactions.setSelectedMenu({ selectedMenu: menu.title }))}
+                onClick={() => {
+                  dispatch(UIactions.setSelectedMenu({ selectedMenu: menu.title }));
+                  localStorage.setItem("selectedMenu", menu.title);
+                }}
                 className={`text-gray-200  text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${
                   menu.gap ? "mt-9" : "mt-2"
                 } ${selectedMenu === menu.title ? "bg-light-white" : "bg-transparent"}`}

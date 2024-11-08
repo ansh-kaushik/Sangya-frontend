@@ -121,6 +121,7 @@ export default function VideoPlayer({ url, title }) {
     // Function to handle keydown events
     const handleKeyDown = (event) => {
       if (!isFocused) return;
+
       if (event.key === "Escape") {
         // Check if the key pressed is 'Esc'
         setVideoState((prev) => ({ ...prev, fullScreen: false })); // Toggle the state
@@ -216,6 +217,7 @@ export default function VideoPlayer({ url, title }) {
       <div className="flex-1">
         <div className="player__wrapper h-full flex react-player ">
           <ReactPlayer
+            // playing={true}
             ref={playerRef}
             className="player h-full"
             url={typeof url === "object" ? url[curQuality] : url}

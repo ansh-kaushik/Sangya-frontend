@@ -28,6 +28,7 @@ import {
   MenuOutlined,
 } from "@mui/icons-material";
 import axiosInstance from "../../services/axiosInstance";
+import { useCookies } from "react-cookie";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -62,6 +63,7 @@ export default function Header() {
   const suggestionsListRef = useRef(null);
   const [seachHistory, setSearhHistory] = useState([]);
   const [seachHistorySuggestions, setSearchHistorySuggestions] = useState([]);
+  // const [cookies, setCookies, removeCookies] = useCookies(["accessToken"]);
   // const [f1, setF1] = useState(false);
 
   const [value, setValue] = useState(null);
@@ -84,6 +86,7 @@ export default function Header() {
     e.preventDefault();
     const BASE_URL = import.meta.env.VITE_BASE_URL;
     await axios.post(`${BASE_URL}/users/logout`, {}, { withCredentials: true });
+    localStorage.setItem("stay-logged", false);
     window.location.reload();
   };
 

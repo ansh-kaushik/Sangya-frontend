@@ -31,7 +31,6 @@ export default function UserVideos() {
       withCredentials: true,
     });
     let videos = res.data.data.videos;
-    console.log(videos);
 
     videos = videos.map((video) => ({
       id: video._id,

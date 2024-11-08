@@ -42,7 +42,8 @@ export default function LikedVideos() {
   // console.log(likedVideos);
 
   useEffect(() => {
-    if (likedVideos.length === 0) getLikedVideos();
+    // if (likedVideos.length === 0)
+    getLikedVideos();
   }, []);
   return (
     <PageWrapper>

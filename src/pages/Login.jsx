@@ -59,7 +59,7 @@ export default function Login() {
       // localStorage.setItem("email", email);
       // localStorage.setItem("auth", true);
       dispatch(UIactions.setSelectedMenu({ selectedMenu: "Home" }));
-      toast.success("Logged in successfully");
+      toast.success("Logged in successfully", { autoClose: 2000 });
       navigate("/");
     }
   };

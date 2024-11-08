@@ -2,11 +2,12 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const initialUIState = {
   sideBarOpen: false,
-  selectedMenu: "Home",
+  selectedMenu: localStorage.getItem("selectedMenu") || "Home",
   darkMode: localStorage.getItem("darkMode") === "true",
   homePageVideos: [],
   likedVideos: [],
   playlists: [],
+  watchHistoryVideos: [],
   displaySearch: "hidden",
   subscriptions: [],
   searchResultVideos: [],
@@ -60,6 +61,9 @@ const UISlice = createSlice({
     },
     setSearchResultVideos(state, action) {
       state.searchResultVideos = action.payload.searchResultVideos;
+    },
+    setWatchHistoryVideos(state, action) {
+      state.watchHistoryVideos = action.payload.watchHistoryVideos;
     },
     setDisplaySearch(state, action) {
       state.displaySearch = action.payload.displaySearch;
