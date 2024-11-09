@@ -1,12 +1,13 @@
 import { Typography } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
-import { timeAgo } from "../../services/utils";
+import { formatDate, timeAgo } from "../../services/utils";
 
-const Description = ({ text, showBorder = true, uploadTime }) => {
+const Description = ({ text, showBorder = true, uploadTime, views }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
   const contentRef = useRef(null);
   const maxHeight = 100; // Set this to your desired threshold height in pixels
+  // console.log(views);
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
@@ -23,7 +24,12 @@ const Description = ({ text, showBorder = true, uploadTime }) => {
     <div
       className={` prose relative pb-4 min-w-full  ${showBorder ? "border rounded-xl p-4 bg-gray-200 dark:text-white dark:bg-zinc-800 dark:border-transparent" : ""}`}
     >
-      {showBorder && <h4 className=" dark:text-white "> {timeAgo(uploadTime)}</h4>}
+      {showBorder && (
+        <h4 className=" dark:text-white ">
+          {" "}
+          {views} views &nbsp; {isExpanded ? formatDate(uploadTime) : timeAgo(uploadTime)}
+        </h4>
+      )}
       <Typography
         variant="subtitle2"
         ref={contentRef}

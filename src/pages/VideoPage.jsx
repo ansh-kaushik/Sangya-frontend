@@ -10,7 +10,7 @@ import VideoPlayer from "../components/VideoCompoents/VideoPlayer";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import axiosInstance from "../services/axiosInstance";
-import { videoActions } from "../store";
+import { UIactions, videoActions } from "../store";
 import { AccountCircleRounded, Close, CloseSharp } from "@mui/icons-material";
 import { timeAgo } from "../services/utils";
 
@@ -96,19 +96,21 @@ const MobileCommentSection = ({ commentSectionOpen, setCommentSectionOpen, comme
 };
 
 export default function VideoPage() {
-  const { title, url, channel, channelImage, description, channelID, uploadedAt } = useSelector(
-    (state) => state.video
-  );
+  const { title, url, channel, channelImage, description, channelID, uploadedAt, views } =
+    useSelector((state) => state.video);
   const commentRef = useRef(null);
-
-  // console.log(timeAgo(uploadedAt));
+  const dispatch = useDispatch();
+  // console.log(views);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const dispatch = useDispatch();
+
   const [subsCnt, setSubsCnt] = useState(0);
   const [videoComments, setVideoComments] = useState([]);
   const [commentSectionOpen, setCommentSectionOpen] = useState(false);
   const { id } = useParams();
+  const { sidebarVideos } = useSelector((state) => state.UI);
+  // console.log(homePageVideos);
+
   //  **************************************************
 
   // *******************************************
@@ -148,6 +150,7 @@ export default function VideoPage() {
           uploadedAt: data.createdAt,
           description: data.description,
           url: data.videoFile,
+          views: data.views,
           channelImage: data.owner?.avatar,
           channel: data.owner?.username,
           channelID: data.owner?._id,
@@ -157,13 +160,42 @@ export default function VideoPage() {
     const data = res.data;
   };
 
-  // const handleClick = () => {
-  //   const safeAreaInsetBottom = getComputedStyle(commentRef.current).paddingBottom;
+  const addView = async () => {
+    try {
+      const res = await axiosInstance.patch(`/videos/addView/${id}`);
+      console.log("🤣🤣".res);
+    } catch (er) {
+      console.log(er);
+    }
+  };
 
-  //   // console.log("Safe Area Inset Bottom:", safeAreaInsetBottom);
-  //   // alert("Safe Area Inset Bottom:", safeAreaInsetBottom);
-  // };
+  const getSidebarVideos = async () => {
+    const res = await axiosInstance.get(`/videos`);
+    let videos = res.data.videos;
+    // console.log(videos);
+    videos = videos.map((video) => ({
+      id: video._id,
+      thumbnail: video.thumbnail,
+      title: video.title,
+      views: video.views,
+      url: video.videoFile,
+      description: video.description,
+      channel: video.owner?.username || "Sangya",
+      channelID: video.owner?._id || "undefined",
+      channelImage: video.owner?.avatar || "./src/assets/channel_icon.png",
+      uploadTime: video.createdAt,
+    }));
+    videos = videos.filter((v) => v.id !== id);
+    // console.log(videos);
 
+    // console.log(Array.isArray(videos));
+
+    dispatch(UIactions.setSideBarVideos({ sidebarVideos: videos }));
+  };
+
+  useEffect(() => {
+    getSidebarVideos();
+  }, [id]);
   useEffect(() => {
     if (channelID) {
       getChannelSubs();
@@ -172,6 +204,7 @@ export default function VideoPage() {
   }, [channelID]);
   useEffect(() => {
     getVideoByID();
+    addView();
     getVideoComments();
   }, []);
   useEffect(() => {
@@ -211,7 +244,11 @@ export default function VideoPage() {
             </div>
             {/* Video description */}
             <div className="w-full mb-2 ">
-              <Description uploadTime={uploadedAt} text={description ? description : ""} />
+              <Description
+                uploadTime={uploadedAt}
+                views={views}
+                text={description ? description : ""}
+              />
             </div>
             {/* Comment input and comments */}
             {windowWidth < 640 ? (
@@ -247,18 +284,22 @@ export default function VideoPage() {
 
           {/* Sidebar for video suggestions */}
           <div className="bg-white-500 flex flex-col flex-wrap  gap-4">
-            {Array.from({ length: 5 }, (_, idx) => (
-              <VideoCard
-                key={idx}
-                sidebar={true}
-                channelImage={videoDetails.channelImage}
-                thumbnail={"../src/assets/thumbnail 1.jpg"}
-                title={videoDetails.title}
-                views={videoDetails.views}
-                channel={videoDetails.channel}
-                uploadTime={videoDetails.uploadTime}
-              />
-            ))}
+            {sidebarVideos &&
+              sidebarVideos.map((video, idx) => (
+                <VideoCard
+                  id={video.id}
+                  key={idx}
+                  sidebar={true}
+                  url={video.url}
+                  channelImage={video.channelImage}
+                  thumbnail={video.thumbnail}
+                  title={video.title}
+                  views={video.views}
+                  channel={video.username}
+                  description={video.description}
+                  uploadTime={video.uploadTime}
+                />
+              ))}
           </div>
         </div>
       </div>

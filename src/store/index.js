@@ -4,7 +4,9 @@ const initialUIState = {
   sideBarOpen: false,
   selectedMenu: localStorage.getItem("selectedMenu") || "Home",
   darkMode: localStorage.getItem("darkMode") === "true",
+  // homePageVideos: [],
   homePageVideos: [],
+  sidebarVideos: [],
   likedVideos: [],
   playlists: [],
   watchHistoryVideos: [],
@@ -22,6 +24,7 @@ const initialAuthState = {
 };
 const initialVideoSlice = {
   url: undefined,
+  id: undefined,
   title: undefined,
   channelImage: undefined,
   channel: undefined,
@@ -45,6 +48,10 @@ const UISlice = createSlice({
     setHomePageVideos(state, action) {
       state.homePageVideos = action.payload.homePageVideos;
     },
+    setSideBarVideos(state, action) {
+      state.sidebarVideos = action.payload.sidebarVideos;
+    },
+
     setLikedVideos(state, action) {
       state.likedVideos = action.payload.likedVideos;
     },
@@ -76,6 +83,7 @@ const videoSlice = createSlice({
   reducers: {
     setVideoDetails(state, action) {
       const {
+        id,
         title,
         url,
         channelImage,
@@ -89,6 +97,7 @@ const videoSlice = createSlice({
       } = action.payload;
       return {
         ...state,
+        id,
         channelID,
         title,
         url,

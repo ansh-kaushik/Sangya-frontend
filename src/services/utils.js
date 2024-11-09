@@ -29,5 +29,8 @@ export const timeAgo = (dateString) => {
 };
 
 // Example usage
-const timestamp = "2024-09-16T09:28:35.454Z";
-// console.log(timeAgo(timestamp)); // Output: e.g., "7 days ago" or "2 hours ago"
+export function formatDate(dateString) {
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", options);
+}
