@@ -23,6 +23,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions, UIactions } from "./store";
 import axiosInstance from "./services/axiosInstance";
 import SearchResults from "./pages/SearchResults";
+import Live from "./pages/Live";
+import LiveVideoPage from "./pages/LiveVideoPage";
+import LiveStream from "./pages/LiveStream";
 
 const getNewKills = async () => {
   // const api_key = "HDEV-8547f177-1188-4cf9-8086-2a8d734ec747";
@@ -102,6 +105,9 @@ function App() {
         <Route path="/video/:id" element={<VideoPage />} />
         <Route path="/uploadVideo" element={<UploadVideo />} />
         <Route path="/search" element={<SearchResults />} />
+        <Route path="/live" element={<Live />} />
+        <Route path="/live/:id" element={<LiveVideoPage />} />
+        <Route path="/goLive" element={<LiveStream />} />
       </Routes>
     </>
   );

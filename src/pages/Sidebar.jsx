@@ -9,7 +9,7 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useDispatch, useSelector } from "react-redux";
 import { UIactions } from "../store";
-import { DarkMode, LightMode, MenuOutlined } from "@mui/icons-material";
+import { DarkMode, LightMode, LiveTv, MenuOutlined, Podcasts } from "@mui/icons-material";
 
 export default function Sidebar() {
   const selectedMenu = useSelector((state) => state.UI.selectedMenu);
@@ -24,6 +24,8 @@ export default function Sidebar() {
     { title: "History", icon: <HistoryIcon />, link: "watchHistory" },
     { title: "Playlists", icon: <PlaylistPlayIcon />, link: "myPlaylists" },
     { title: "Liked Videos", icon: <ThumbUpIcon />, link: "likedVideos" },
+    { title: "Live Now", icon: <LiveTv />, link: "live", gap: true },
+    { title: "Go Live", icon: <Podcasts />, link: "goLive" },
     // { title: "Settings", icon: <SettingsIcon />, gap: true, link: "appSettings" },
   ];
 
